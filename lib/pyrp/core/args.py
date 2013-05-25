@@ -15,6 +15,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
+import os
+
 from sys import argv
 from pyrp.core import macros
 from pyrp.core import log
@@ -29,6 +31,7 @@ helpmsg = """Options:
   -h, --help   show this help message and exit
   -u, --usage  show program's usage message and exit
 """
+
 
 def showhelp(name=True, usagemsg=True, options=True, code=0):
     if name:
@@ -54,3 +57,7 @@ elif argument[:2] == '--':
     log.error('Unknown argument')
     showhelp(code=1)
 
+if not os.path.exists(argument) or not os.path.isfile(argument):
+    log.error("%s: file not found" % argument)
+else:
+    filepath = argument

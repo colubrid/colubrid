@@ -25,6 +25,7 @@ logging.basicConfig(filename='pyrp.log',
         level=logging.DEBUG if macros.status <= 1 else logging.INFO)
 logger = logging.getLogger('core')
 
+
 def log(debugger):
     def inner(*args, **kwargs):
         if 'stop' in kwargs:
@@ -39,16 +40,19 @@ def log(debugger):
             exit(1)
     return inner
 
+
 @log
 def critical(message='Unknown error', log=logger):
     log.critical(message)
     print 'CRITICAL: %s' % message
+
 
 @log
 def error(message='Unknown error', log=logger):
     log.error(message)
     print 'ERROR: %s' % message
     return False
+
 
 @log
 def debug(message='', log=logger):
