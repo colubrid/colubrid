@@ -30,6 +30,7 @@ helpmsg = """Options:
   -u, --usage  show program's usage message and exit
 """
 
+
 def showhelp(name=True, usagemsg=True, options=True, code=0):
     if name:
         print macros.full_name
@@ -53,4 +54,3 @@ elif argument == '--version':
 elif argument[:2] == '--':
     log.error('Unknown argument')
     showhelp(code=1)
-
