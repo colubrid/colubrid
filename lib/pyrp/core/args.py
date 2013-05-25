@@ -15,6 +15,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
+import os
+
 from sys import argv
 from pyrp.core import macros
 from pyrp.core import log
@@ -54,3 +56,8 @@ elif argument == '--version':
 elif argument[:2] == '--':
     log.error('Unknown argument')
     showhelp(code=1)
+
+if not os.path.exists(argument) or not os.path.isfile(argument):
+    log.error("%s file not found" % argument)
+else:
+    filepath = argument
