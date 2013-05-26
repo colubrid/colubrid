@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-#
 # Copyright (C) 2013 S. Daniel Francis <francis@sugarlabs.org>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -18,7 +15,13 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-import pyrp
-from pyrp.core import args
+# Logging functions
 
-pyrp.main(args.filepath)
+
+def pyrp_print(*args, **kwargs):
+    print ' '.join(args)
+
+builtins = {'print': pyrp_print}
+
+def is_function(name):
+    return True if name in builtins else False

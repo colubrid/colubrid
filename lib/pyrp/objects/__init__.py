@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-#
 # Copyright (C) 2013 S. Daniel Francis <francis@sugarlabs.org>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -17,8 +14,3 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
-
-import pyrp
-from pyrp.core import args
-
-pyrp.main(args.filepath)
