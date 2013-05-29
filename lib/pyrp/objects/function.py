@@ -15,13 +15,20 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-# Logging functions
-
+from pyrp.core import log
 
 def pyrp_print(*args, **kwargs):
     print ' '.join(args)
 
 builtins = {'print': pyrp_print}
 
-def is_function(name):
-    return True if name in builtins else False
+def search_function(name):
+    log.debug('Checking for %s' % name)
+    if name in builtins:
+        return 'builtin'
+    else:
+        return None
+
+def run_builtin(name, args, kwargs):
+    log.debug('Running builtin function %s' % name)
+    builtins[name](*args, **kwargs)

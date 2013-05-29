@@ -34,7 +34,7 @@ def log(debugger):
         else:
             stop = (True, False)
         end = debugger(*args, **kwargs)
-        if end and stop[1]:
+        if not end and not stop[1]:
             return
         elif stop[0]:
             exit(1)
@@ -57,4 +57,4 @@ def error(message='Unknown error', log=logger):
 @log
 def debug(message='', log=logger):
     log.debug(message)
-    return
+    return False
