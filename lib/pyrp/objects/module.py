@@ -19,13 +19,17 @@ import os
 import logging
 import json
 from pyrp.core import log
-from pyrp.objects import function
+from pyrp.objects import builtin
 
 
 class Module:
     def __init__(self, filepath, main=False):
         self.filename = os.path.basename(filepath)
         self.logger = logging.getLogger(self.filename)
+
+        self.objects = {}
+        self.build_objects()
+
         file_object = open(filepath, 'r')
         content = json.load(file_object)
         self.content = []
@@ -37,28 +41,56 @@ class Module:
         if main:
             self.run()
 
+    def build_objects(self):
+        for i in builtin.objects:
+            self.objects[i] = builtin.objects[i]
+
     def parse_line(self, line):
         log.debug('Parsing line %s' % str(line), self.logger)
-        word = str(line[0])
-        function_type = function.search_function(word)
-        if function_type:
-            log.debug('Checking arguments for %s' % word, self.logger)
-            args = line[1]
-            kwargs = line[2]
-            for i in args:
-                self.check_object(i)
-            for i in kwargs:
-                self.check_object(kwargs[i])
-            self.content.append(['call', function_type, word, args, kwargs])
+        line_type = type(line)
+
+        if line_type == dict:
+            self.content.append(self.check_object(['set', [], line]))
+        else:
+            self.content.append(self.check_object(line))
 
     def check_object(self, expression):
-        if type(expression) == unicode:
-            return True
+        expression_type = type(expression)
+        if expression_type == list:
+            length = len(expression)
+            if length == 1:
+                return ['call', 'get', [expression[0]], {}]
+            elif length > 1:
+                args = map(self.check_object, expression[1])
+                kwargs = self.check_kwargs(expression[2])
+                return ['call', expression[0], args, kwargs]
+        elif type(expression) == unicode:
+            return ['call', 'str', [expression], {}]
         else:
             log.error('Syntax error in %s' % expression, self.logger)
 
+    def check_kwargs(self, kwargs):
+        kwdict = {}
+        for key in kwargs:
+            kwdict[key] = self.check_object(kwargs[key])
+        return kwdict
+
+    def create_object(self, expression):
+        if type(expression) == list:  # This object needs to be built.
+            if expression[0] == 'call':
+                args = map(self.create_object, expression[2])
+                kwargs = self.create_kwargs(expression[3])
+                return self.objects[expression[1]](self, *args, **kwargs)
+        else:  # This object is already built
+            return expression
+
+    def create_kwargs(self, kwargs):
+        kwdict = {}
+        for key in kwargs:
+            kwdict[key] = self.create_object(kwargs[key])
+        return kwdict
+
     def run(self):
+        log.debug('Running', self.logger)
         for i in self.content:
-            if i[0] == 'call':
-                if i[1] == 'builtin':
-                    function.run_builtin(i[2], i[3], i[4])
+            self.create_object(i)

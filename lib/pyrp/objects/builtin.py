@@ -15,16 +15,20 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
+from pyrp.objects.strings import String
 
-def pyrp_print(module, *args, **kwargs):
-    arguments = map(lambda arg: str(arg), args)
-    print ' '.join(arguments)
+from pyrp.objects.function import variable_get
+from pyrp.objects.function import variable_set
 
+from pyrp.objects.function import pyrp_print
 
-def variable_set(module, *args, **kwargs):
-    for i in kwargs:
-        module.objects[i] = kwargs[i]
+objects = {
+    # Types
+    'str': String,
 
+    # Functions
+    'get': variable_get,
+    'set': variable_set,
 
-def variable_get(module, *args, **kwargs):
-    return module.objects[args[0]]
+    'print': pyrp_print
+}

@@ -16,15 +16,9 @@
 # MA 02110-1301, USA.
 
 
-def pyrp_print(module, *args, **kwargs):
-    arguments = map(lambda arg: str(arg), args)
-    print ' '.join(arguments)
+class String:
+    def __init__(self, module, *args, **kwargs):
+        self.string = args[0]
 
-
-def variable_set(module, *args, **kwargs):
-    for i in kwargs:
-        module.objects[i] = kwargs[i]
-
-
-def variable_get(module, *args, **kwargs):
-    return module.objects[args[0]]
+    def __str__(self):
+        return self.string
