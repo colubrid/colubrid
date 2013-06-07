@@ -67,7 +67,7 @@ class Module:
         elif type(expression) == unicode:
             return ['call', 'str', [expression], {}]
         else:
-            log.error('Syntax error in %s' % expression, self.logger)
+            log.error('Syntax error in %s' % expression, self.logger, stop=True)
 
     def check_kwargs(self, kwargs):
         kwdict = {}
