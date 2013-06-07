@@ -58,6 +58,6 @@ elif argument[:2] == '--':
     showhelp(code=1)
 
 if not os.path.exists(argument) or not os.path.isfile(argument):
-    log.error("%s: file not found" % argument)
+    log.error("%s: file not found" % argument, stop=True)
 else:
     filepath = argument
