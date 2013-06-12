@@ -19,11 +19,36 @@ import logging
 from pyrp.core import macros
 import os
 
-if os.path.exists('pyrp.log'):
-    os.remove('pyrp.log')
-logging.basicConfig(filename='pyrp.log',
-        level=logging.DEBUG if macros.status <= 1 else logging.INFO)
-logger = logging.getLogger('core')
+
+class VoidLogger:
+    def info(self, *args, **kwargs):
+        pass
+
+    def debug(self, *args, **kwargs):
+        pass
+
+    def warning(self, *args, **kwargs):
+        pass
+
+    def error(self, *args, **kwargs):
+        pass
+
+    def critical(self, *args, **kwargs):
+        pass
+
+logger = VoidLogger()
+
+
+def set_file(path):
+    if os.path.exists(path):
+        os.remove(path)
+
+    logging.basicConfig(filename=path,
+                        level=logging.DEBUG if macros.status <= 1
+                        else logging.INFO)
+
+    global logger
+    logger = logging.getLogger('core')
 
 
 def log(debugger):

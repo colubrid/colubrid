@@ -26,10 +26,11 @@ Usage:
     %s FILE -- Execute a PyRP file.
 """ % argv[0]
 
-helpmsg = """Options:
-  --version    show program's version number and exit
-  -h, --help   show this help message and exit
-  -u, --usage  show program's usage message and exit
+helpmsg = """PyRP Options:
+  -h, --help     Show this help message and exit.
+  -l, --log=PATH Set the PATH to save an output log file.
+  -u, --usage    Show program's usage message and exit.
+  -v, --version      Show program's version number and exit.
 """
 
 
@@ -46,16 +47,25 @@ if len(argv) <= 1:
     showhelp(code=1)
 
 argument = argv[1]
+index = 1
 
-if argument == '--help':
-    showhelp()
-elif argument == '--usage':
-    showhelp(name=False, options=False)
-elif argument == '--version':
-    showhelp(usagemsg=False, options=False)
-elif argument[:2] == '--':
-    log.error('Unknown argument')
-    showhelp(code=1)
+while argument[:1] == '-':
+    if argument == '--help' or argument == '-h':
+        showhelp()
+    elif argument == '--usage' or argument == '-u':
+        showhelp(name=False, options=False)
+    elif argument == '--version' or argument == '-v':
+        showhelp(usagemsg=False, options=False)
+    elif argument == '-l':
+        index += 1
+        log.set_file(argv[index])
+    elif argument.startswith('--log='):
+        log.set_file(argument.split('=')[1])
+    else:
+        log.error('Unknown argument %s' % argument)
+        showhelp(code=1)
+    index += 1
+    argument = argv[index]
 
 if not os.path.exists(argument) or not os.path.isfile(argument):
     log.error("%s: file not found" % argument, stop=True)

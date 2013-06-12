@@ -24,6 +24,6 @@ status = 0
 phases = ['Development Beta', 'Alpha', 'Release Candidate', '']
 
 version = '%d.%d.%d %s' % (major_version, minor_version, micro_version,
-                            phases[status])
+                           phases[status])
 
 full_name = '%s %s' % (name, version)
