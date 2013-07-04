@@ -15,22 +15,9 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.objects.strings import String
-from pyrp.objects.numbers import Int
+class Int:
+    def __init__(self, module, *args, **kwargs):
+        self.number = args[0]
 
-from pyrp.objects.function import variable_get
-from pyrp.objects.function import variable_set
-
-from pyrp.objects.function import pyrp_print
-
-objects = {
-    # Types
-    'str': String,
-    'int': Int,
-
-    # Functions
-    'get': variable_get,
-    'set': variable_set,
-
-    'print': pyrp_print
-}
+    def __str__(self):
+        return str(self.number)

@@ -66,6 +66,8 @@ class Module:
                 return [expression[0], args, kwargs]
         elif type(expression) == unicode:
             return ['str', [expression], {}]
+        elif type(expression) == int:
+            return ['int', [expression], {}]
         else:
             log.error('Syntax error in %s' % expression, self.logger, stop=True)
 
