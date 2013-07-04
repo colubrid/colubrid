@@ -64,10 +64,12 @@ class Module:
                 args = map(self.check_object, expression[1])
                 kwargs = self.check_kwargs(expression[2])
                 return [expression[0], args, kwargs]
-        elif type(expression) == unicode:
+        elif expression_type == unicode:
             return ['str', [expression], {}]
-        elif type(expression) == int:
+        elif expression_type == int:
             return ['int', [expression], {}]
+        elif expression_type == float:
+            return ['float', [expression], {}]
         else:
             log.error('Syntax error in %s' % expression, self.logger, stop=True)
 

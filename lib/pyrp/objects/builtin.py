@@ -17,6 +17,7 @@
 
 from pyrp.objects.strings import String
 from pyrp.objects.numbers import Int
+from pyrp.objects.numbers import Float
 
 from pyrp.objects.function import variable_get
 from pyrp.objects.function import variable_set
@@ -27,6 +28,7 @@ objects = {
     # Types
     'str': String,
     'int': Int,
+    'float': Float,
 
     # Functions
     'get': variable_get,

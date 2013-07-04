@@ -15,9 +15,18 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-class Int:
+
+class Number:
     def __init__(self, module, *args, **kwargs):
         self.number = args[0]
 
     def __str__(self):
         return str(self.number)
+
+
+class Int(Number):
+    pass
+
+
+class Float(Number):
+    pass
