@@ -59,13 +59,13 @@ class Module:
         if expression_type == list:
             length = len(expression)
             if length == 1:
-                return ['call', 'get', [expression[0]], {}]
+                return ['get', [expression[0]], {}]
             elif length > 1:
                 args = map(self.check_object, expression[1])
                 kwargs = self.check_kwargs(expression[2])
-                return ['call', expression[0], args, kwargs]
+                return [expression[0], args, kwargs]
         elif type(expression) == unicode:
-            return ['call', 'str', [expression], {}]
+            return ['str', [expression], {}]
         else:
             log.error('Syntax error in %s' % expression, self.logger, stop=True)
 
@@ -77,10 +77,9 @@ class Module:
 
     def create_object(self, expression):
         if type(expression) == list:  # This object needs to be built.
-            if expression[0] == 'call':
-                args = map(self.create_object, expression[2])
-                kwargs = self.create_kwargs(expression[3])
-                return self.objects[expression[1]](self, *args, **kwargs)
+            args = map(self.create_object, expression[1])
+            kwargs = self.create_kwargs(expression[2])
+            return self.objects[expression[0]](self, *args, **kwargs)
         else:  # This object is already built
             return expression
 
