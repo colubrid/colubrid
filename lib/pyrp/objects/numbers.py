@@ -17,16 +17,40 @@
 
 
 class Number:
-    def __init__(self, module, *args, **kwargs):
-        self.number = args[0]
+    overtypes = []
+
+    def __init__(self, module):
+        self.module = module
 
     def __str__(self):
         return str(self.number)
+        
+    def __add__(self, other):
+        if isinstance(other, Number):
+            return make_number(self.module, self.number + other.number)
+        super(Number, self).__add__(other)
 
 
 class Int(Number):
-    pass
+    def __init__(self, module, *args, **kwargs):
+        Number.__init__(self, module)
+        self.number = int(args[0])
 
 
 class Float(Number):
-    pass
+    overtypes = [Int]
+
+    def __init__(self, module, *args, **kwargs):
+        Number.__init__(self, module)
+        self.number = float(args[0])
+
+
+numbers = {'int': (int, Int),
+           'float': (float, Float)}
+
+
+def make_number(module, number):
+    number_type = type(number)
+    for i in numbers:
+        if number_type == numbers[i][0]:
+            return numbers[i][1](module, number)

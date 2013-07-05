@@ -50,28 +50,30 @@ class Module:
         line_type = type(line)
 
         if line_type == dict:
-            self.content.append(self.check_object(['set', [], line]))
+            for i in line:
+                self.content.append(self.check_object(['set', [i, line[i]], {}]))
         else:
             self.content.append(self.check_object(line))
 
     def check_object(self, expression):
         expression_type = type(expression)
-        if expression_type == list:
-            length = len(expression)
-            if length == 1:
-                return ['get', [expression[0]], {}]
-            elif length > 1:
-                args = map(self.check_object, expression[1])
-                kwargs = self.check_kwargs(expression[2])
-                return [expression[0], args, kwargs]
-        elif expression_type == unicode:
-            return ['str', [expression], {}]
-        elif expression_type == int:
-            return ['int', [expression], {}]
-        elif expression_type == float:
-            return ['float', [expression], {}]
-        else:
-            log.error('Syntax error in %s' % expression, self.logger, stop=True)
+        try:
+            if expression_type == list:
+                length = len(expression)
+                if length == 1:
+                    return ['get', [expression[0]], {}]
+                elif length > 1:
+                    args = map(self.check_object, expression[1])
+                    kwargs = self.check_kwargs(expression[2])
+                    return [expression[0], args, kwargs]
+            elif expression_type in builtin.types:
+                return [builtin.types[expression_type], [expression], {}]
+            else:
+                log.error('Syntax error in %s' % expression,
+                            self.logger, stop=True)
+        except:
+            log.raise_traceback('Unknown error when parsing object type %s of %s.\n{tracemsg}' %
+                         (str(expression), expression_type.__name__), log=self.logger)
 
     def check_kwargs(self, kwargs):
         kwdict = {}
@@ -80,12 +82,16 @@ class Module:
         return kwdict
 
     def create_object(self, expression):
-        if type(expression) == list:  # This object needs to be built.
-            args = map(self.create_object, expression[1])
-            kwargs = self.create_kwargs(expression[2])
-            return self.objects[expression[0]](self, *args, **kwargs)
-        else:  # This object is already built
-            return expression
+        try:
+            if type(expression) == list:  # This object needs to be built.
+                args = map(self.create_object, expression[1])
+                kwargs = self.create_kwargs(expression[2])
+                return self.objects[expression[0]](self, *args, **kwargs)
+            else:  # This object is already built
+                return expression
+        except:
+            log.raise_traceback('Unknown error when executing expression %s\n\
+{tracemsg}' % expression, self.logger)
 
     def create_kwargs(self, kwargs):
         kwdict = {}

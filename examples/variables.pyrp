@@ -1,4 +1,5 @@
 [
-    {"text": "Hello World"},
-    ["print", [["text"]], {}]
+    {"text": "Hello World", "text2": "\n", "text3": "Hello World"},
+    {"space": ["text2"]},
+    ["print", [["text"], ["space"], ["text3"]], {}]
 ]
