@@ -22,9 +22,8 @@ def pyrp_print(module, *args, **kwargs):
 
 
 def variable_set(module, *args, **kwargs):
-    for i in kwargs:
-        module.objects[i] = kwargs[i]
+    module.objects[str(args[0])] = args[1]
 
 
 def variable_get(module, *args, **kwargs):
-    return module.objects[args[0]]
+    return module.objects[str(args[0])]

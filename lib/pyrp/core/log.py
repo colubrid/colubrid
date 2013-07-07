@@ -15,9 +15,11 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
+import sys
+import traceback
+import os
 import logging
 from pyrp.core import macros
-import os
 
 
 class VoidLogger:
@@ -59,9 +61,18 @@ def log(debugger):
         else:
             stop = (True, False)
         end = debugger(*args, **kwargs)
-        if not end and not stop[1]:
-            return
-        elif stop[0]:
+        finish = False
+        if stop[1]:
+            if stop[0]:
+                finish = True
+            else:
+                return
+        else:
+            if not end and end is not None:
+                return
+            elif stop[0]:
+                finish = True
+        if finish:
             exit(1)
     return inner
 
@@ -83,3 +94,10 @@ def error(message='Unknown error', log=logger):
 def debug(message='', log=logger):
     log.debug(message)
     return False
+
+
+def raise_traceback(message, *args, **kwargs):
+    exc_type, exc_value, exc_traceback = sys.exc_info()
+    error = ''.join(traceback.format_exception(exc_type, exc_value,
+                                                exc_traceback))
+    critical(message.replace('{tracemsg}', error), *args, **kwargs)

@@ -15,36 +15,9 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.objects.strings import String
-from pyrp.objects.numbers import numbers
 
-from pyrp.objects.function import variable_get
-from pyrp.objects.function import variable_set
-
-from pyrp.objects.function import pyrp_print
-
-from pyrp.objects.operators import addition
-
-
-types = {
-    unicode: 'str'
-}
-
-objects = {
-    # Types
-    'str': String,
-
-    # Functions
-    'get': variable_get,
-    'set': variable_set,
-
-    'print': pyrp_print,
-
-    # Operators
-    '+': addition
-}
-
-# Add  number types
-for i in numbers:
-    types[numbers[i][0]] = i
-    objects[i] = numbers[i][1]
+def addition(module, *args, **kwargs):
+    current = args[0]
+    for i in args[1:]:
+        current = current + i
+    return current
