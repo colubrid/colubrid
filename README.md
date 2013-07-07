@@ -20,7 +20,7 @@ $ bin/pyrp-shell
 The file interpreter
 --------------------
 
-The basic usage of pyrp is::
+The basic usage of pyrp is:
 ```shell
 $ pyrp FILE
 ```
