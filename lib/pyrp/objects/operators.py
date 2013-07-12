@@ -15,9 +15,33 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
+def operator(operation):
+    def inner(module, *args, **kwargs):
+        current = args[0]
+        for i in args[1:]:
+            current = operation(current, i)
+        return current
+    return inner
 
-def addition(module, *args, **kwargs):
-    current = args[0]
-    for i in args[1:]:
-        current = current + i
-    return current
+@operator
+def addition(a, b):
+    return a + b
+
+@operator
+def substraction(a, b):
+    return a - b
+
+@operator
+def multiplication(a, b):
+    return a * b
+
+@operator
+def division(a, b):
+    return a / b
+
+operators = {
+        '+': addition,
+        '-': substraction,
+        '/': division,
+        '*': multiplication
+}

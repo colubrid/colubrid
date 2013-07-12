@@ -24,11 +24,26 @@ class Number:
 
     def __str__(self):
         return str(self.number)
-        
+
     def __add__(self, other):
         if isinstance(other, Number):
             return make_number(self.module, self.number + other.number)
         super(Number, self).__add__(other)
+
+    def __sub__(self, other):
+        if isinstance(other, Number):
+            return make_number(self.module, self.number - other.number)
+        super(Number, self).__add__(other)
+
+    def __mul__(self, other):
+        if isinstance(other, Number):
+            return make_number(self.module, self.number * other.number)
+        super(Number, self).__mul__(other)
+
+    def __div__(self, other):
+        if isinstance(other, Number):
+            return make_number(self.module, self.number / other.number)
+        super(Number, self).__div__(other)
 
 
 class Int(Number):

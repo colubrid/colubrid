@@ -23,7 +23,7 @@ from pyrp.objects.function import variable_set
 
 from pyrp.objects.function import pyrp_print
 
-from pyrp.objects.operators import addition
+from pyrp.objects.operators import operators
 
 
 types = {
@@ -39,10 +39,11 @@ objects = {
     'set': variable_set,
 
     'print': pyrp_print,
-
-    # Operators
-    '+': addition
 }
+
+# Add operators
+
+objects = dict(objects.items() + operators.items())
 
 # Add  number types
 for i in numbers:
