@@ -16,7 +16,6 @@
 # MA 02110-1301, USA.
 
 import os
-import logging
 import json
 from pyrp.core import log
 from pyrp.objects import builtin
@@ -25,7 +24,7 @@ from pyrp.objects import builtin
 class Module:
     def __init__(self, filepath, main=False):
         self.filename = os.path.basename(filepath)
-        self.logger = logging.getLogger(self.filename)
+        self.logger = log.get_logger(self.filename)
 
         self.objects = {}
         self.build_objects()
@@ -64,7 +63,8 @@ class Module:
                     return ['get', [expression[0]], {}]
                 elif length > 1:
                     args = map(self.check_object, expression[1])
-                    kwargs = self.check_kwargs(expression[2])
+                    kwargs = self.check_kwargs(expression[2]) if length == 3 \
+                                    else {}
                     return [expression[0], args, kwargs]
             elif expression_type in builtin.types:
                 return [builtin.types[expression_type], [expression], {}]

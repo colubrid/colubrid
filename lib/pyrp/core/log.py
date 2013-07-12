@@ -53,6 +53,13 @@ def set_file(path):
     logger = logging.getLogger('core')
 
 
+def get_logger(name):
+    if isinstance(logger, VoidLogger):
+        return VoidLogger()
+    else:
+        return logging.getLogger(name)
+
+
 def log(debugger):
     def inner(*args, **kwargs):
         if 'stop' in kwargs:

@@ -23,5 +23,5 @@
 }, "Dependent variables should not be in the same declaration",
 {"space": ["text2"]},
 
-["print", [["text"], ["space"], ["text3"]], {}]
+["print", [["text"], ["space"], ["text3"]]]
 ]

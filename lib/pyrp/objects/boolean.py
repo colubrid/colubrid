@@ -15,40 +15,11 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.objects.strings import String
-from pyrp.objects.numbers import numbers
-from pyrp.objects.boolean import Boolean
 
-from pyrp.objects.function import variable_get
-from pyrp.objects.function import variable_set
+class Boolean:
+    def __init__(self, module, *args, **kwargs):
+        self.module = module
+        self.value = bool(args[0])
 
-from pyrp.objects.function import pyrp_print
-
-from pyrp.objects.operators import operators
-
-
-types = {
-    unicode: 'str',
-    bool: 'bool'
-}
-
-objects = {
-    # Types
-    'str': String,
-    'bool': Boolean,
-
-    # Functions
-    'get': variable_get,
-    'set': variable_set,
-
-    'print': pyrp_print,
-}
-
-# Add operators
-
-objects = dict(objects.items() + operators.items())
-
-# Add  number types
-for i in numbers:
-    types[numbers[i][0]] = i
-    objects[i] = numbers[i][1]
+    def __str__(self):
+        print 'true' if self.value else 'false'
