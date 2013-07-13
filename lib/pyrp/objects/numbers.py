@@ -25,25 +25,31 @@ class Number:
     def __str__(self):
         return str(self.number)
 
-    def __add__(self, other):
-        if isinstance(other, Number):
-            return make_number(self.module, self.number + other.number)
-        super(Number, self).__add__(other)
+    def binary_operator(func):
+        def inner(self, b):
+            if isinstance(b, Number):
+                return make_number(self.module, func(self.number, b.number))
+            else:
+                # TODO: Create type checking function
+                print "Operation not supported"
+                exit()
+        return inner
 
-    def __sub__(self, other):
-        if isinstance(other, Number):
-            return make_number(self.module, self.number - other.number)
-        super(Number, self).__add__(other)
+    @binary_operator
+    def __add__(a, b):
+        return a + b
 
-    def __mul__(self, other):
-        if isinstance(other, Number):
-            return make_number(self.module, self.number * other.number)
-        super(Number, self).__mul__(other)
+    @binary_operator
+    def __sub__(a, b):
+        return a - b
 
-    def __div__(self, other):
-        if isinstance(other, Number):
-            return make_number(self.module, self.number / other.number)
-        super(Number, self).__div__(other)
+    @binary_operator
+    def __mul__(a, b):
+        return a * b
+
+    @binary_operator
+    def __div__(a, b):
+        return a / b
 
 
 class Int(Number):
