@@ -22,4 +22,4 @@ class Boolean:
         self.value = bool(args[0])
 
     def __str__(self):
-        print 'true' if self.value else 'false'
+        return 'true' if self.value else 'false'
