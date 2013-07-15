@@ -46,22 +46,33 @@ def showhelp(name=True, usagemsg=True, options=True, code=0):
 if len(argv) <= 1:
     showhelp(code=1)
 
+booleans = [('-h', '--help', showhelp),
+            ('-u', '--usage', lambda: showhelp(name=False, options=False)),
+            ('-v', '--version',
+                lambda: showhelp(usagemsg=False, options=False))]
+
+strings = [('-l', '--log=', log.set_file)]
+
 argument = argv[1]
 index = 1
 
 while argument[:1] == '-':
-    if argument == '--help' or argument == '-h':
-        showhelp()
-    elif argument == '--usage' or argument == '-u':
-        showhelp(name=False, options=False)
-    elif argument == '--version' or argument == '-v':
-        showhelp(usagemsg=False, options=False)
-    elif argument == '-l':
-        index += 1
-        log.set_file(argv[index])
-    elif argument.startswith('--log='):
-        log.set_file(argument.split('=')[1])
-    else:
+    found = False
+    for i in booleans:
+        if argument == i[0] or argument == i[1]:
+            i[2]()
+            found = True
+            break
+    if not found:
+        for i in strings:
+            if argument == i[0]:
+                index += 1
+                i[2](argv[index])
+                found = True
+            elif argument.startswith(i[1]):
+                i[2](argument.split('=')[1])
+                found = True
+    if not found:
         log.error('Unknown argument %s' % argument)
         showhelp(code=1)
     index += 1
