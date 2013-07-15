@@ -15,7 +15,10 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-def operator(operation):
+from pyrp.objects.boolean import Boolean
+
+
+def arithmetic(operation):
     def inner(module, *args, **kwargs):
         current = args[0]
         for i in args[1:]:
@@ -23,25 +26,61 @@ def operator(operation):
         return current
     return inner
 
-@operator
+
+def comparator(operation):
+    def inner(module, *args, **kwargs):
+        first = args[0]
+        for i in args[1:]:
+            if not operation(first, i):
+                return Boolean(module, False)
+        return Boolean(module, True)
+    return inner
+
+
+@arithmetic
 def addition(a, b):
     return a + b
 
-@operator
+
+@arithmetic
 def substraction(a, b):
     return a - b
 
-@operator
+
+@arithmetic
 def multiplication(a, b):
     return a * b
 
-@operator
+
+@arithmetic
 def division(a, b):
     return a / b
 
+
+@comparator
+def bigger(a, b):
+    return a > b
+
+
+@comparator
+def smaller(a, b):
+    return a < b
+
+
+@comparator
+def equal(a, b):
+    return a == b
+
+
 operators = {
+        # Arithmetic operators
         '+': addition,
         '-': substraction,
         '/': division,
-        '*': multiplication
+        '*': multiplication,
+
+        # Comparative operators
+        '>': bigger,
+        '<': smaller,
+        '=': equal
 }
