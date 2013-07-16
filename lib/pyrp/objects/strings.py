@@ -22,3 +22,8 @@ class String:
 
     def __str__(self):
         return self.string
+
+    def __cmp__(self, other):
+        a = self.string
+        b = other.string
+        return 0 if a == b else -1 if a < b else 1
