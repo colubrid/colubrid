@@ -15,10 +15,17 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
+from pyrp.objects.strings import String
+
 
 def pyrp_print(module, *args, **kwargs):
     arguments = map(lambda arg: str(arg), args)
     print ' '.join(arguments)
+
+
+def pyrp_input(module, *args, **kwargs):
+    prompt = str(args[0]) + ' '
+    return String(module, raw_input(prompt))
 
 
 def variable_set(module, *args, **kwargs):

@@ -23,6 +23,7 @@ from pyrp.objects.function import variable_get
 from pyrp.objects.function import variable_set
 
 from pyrp.objects.function import pyrp_print
+from pyrp.objects.function import pyrp_input
 
 from pyrp.objects.operators import operators
 
@@ -42,6 +43,7 @@ objects = {
     'set': variable_set,
 
     'print': pyrp_print,
+    'input': pyrp_input
 }
 
 # Add operators
