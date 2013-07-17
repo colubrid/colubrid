@@ -15,18 +15,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.objects.object import PyRPObject
 
-
-class String(PyRPObject):
-    def __init__(self, module, *args, **kwargs):
-        PyRPObject.__init__(self)
-        self.string = args[0]
-
-    def __str__(self):
-        return self.string
-
-    def __cmp__(self, other):
-        a = self.string
-        b = other.string
-        return 0 if a == b else -1 if a < b else 1
+class PyRPObject:
+    def __init__(self):
+        pass

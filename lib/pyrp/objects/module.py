@@ -19,10 +19,12 @@ import os
 import json
 from pyrp.core import log
 from pyrp.objects import builtin
+from pyrp.objects.object import PyRPObject
 
 
-class Module:
+class Module(PyRPObject):
     def __init__(self, filepath, main=False):
+        PyRPObject.__init__(self)
         self.filename = os.path.basename(filepath)
         self.logger = log.get_logger(self.filename)
 

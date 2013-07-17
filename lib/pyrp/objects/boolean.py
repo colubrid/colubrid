@@ -15,9 +15,12 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
+from pyrp.objects.object import PyRPObject
 
-class Boolean:
+
+class Boolean(PyRPObject):
     def __init__(self, module, *args, **kwargs):
+        PyRPObject.__init__(self)
         self.module = module
         self.value = bool(args[0])
 

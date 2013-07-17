@@ -15,11 +15,14 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
+from pyrp.objects.object import PyRPObject
 
-class Number:
+
+class Number(PyRPObject):
     overtypes = []
 
     def __init__(self, module):
+        PyRPObject.__init__(self)
         self.module = module
 
     def __str__(self):
