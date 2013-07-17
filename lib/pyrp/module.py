@@ -46,9 +46,7 @@ class Module(PyRPObject):
             self.objects[i] = builtin.objects[i]
 
     def parse_line(self, line):
-        log.debug('Parsing line %s' % str(line), self.logger)
         line_type = type(line)
-
         if line_type == dict:
             for i in line:
                 self.content.append(self.check_object(['set', [i, line[i]], {}]))
