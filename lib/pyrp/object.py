@@ -15,7 +15,29 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
+from pyrp.core import log
+
 
 class PyRPObject:
+    __name__ = "none"
+
     def __init__(self):
-        pass
+        self.logger = log.get_logger(self.__name__)
+
+    def create_object(self, expression):
+        try:
+            if type(expression) == list:  # This object needs to be built.
+                args = map(self.create_object, expression[1])
+                kwargs = self.create_kwargs(expression[2])
+                return self.objects[expression[0]](self, *args, **kwargs)
+            else:  # This object is already built
+                return expression
+        except:
+            log.raise_traceback('Unknown error when executing expression %s\n\
+{tracemsg}' % expression, self.logger)
+
+    def create_kwargs(self, kwargs):
+        kwdict = {}
+        for key in kwargs:
+            kwdict[key] = self.create_object(kwargs[key])
+        return kwdict

@@ -24,9 +24,8 @@ from pyrp.object import PyRPObject
 
 class Module(PyRPObject):
     def __init__(self, filepath, main=False):
+        self.__name__ = os.path.basename(filepath)
         PyRPObject.__init__(self)
-        self.filename = os.path.basename(filepath)
-        self.logger = log.get_logger(self.filename)
 
         self.objects = {}
         self.build_objects()
@@ -81,24 +80,6 @@ class Module(PyRPObject):
         kwdict = {}
         for key in kwargs:
             kwdict[key] = self.check_object(kwargs[key])
-        return kwdict
-
-    def create_object(self, expression):
-        try:
-            if type(expression) == list:  # This object needs to be built.
-                args = map(self.create_object, expression[1])
-                kwargs = self.create_kwargs(expression[2])
-                return self.objects[expression[0]](self, *args, **kwargs)
-            else:  # This object is already built
-                return expression
-        except:
-            log.raise_traceback('Unknown error when executing expression %s\n\
-{tracemsg}' % expression, self.logger)
-
-    def create_kwargs(self, kwargs):
-        kwdict = {}
-        for key in kwargs:
-            kwdict[key] = self.create_object(kwargs[key])
         return kwdict
 
     def run(self):
