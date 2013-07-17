@@ -15,7 +15,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.objects.boolean import Boolean
+from pyrp.boolean import Boolean
 
 
 def arithmetic(operation):

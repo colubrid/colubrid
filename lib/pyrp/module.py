@@ -18,8 +18,8 @@
 import os
 import json
 from pyrp.core import log
-from pyrp.objects import builtin
-from pyrp.objects.object import PyRPObject
+from pyrp import builtin
+from pyrp.object import PyRPObject
 
 
 class Module(PyRPObject):

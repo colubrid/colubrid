@@ -15,18 +15,42 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.objects.object import PyRPObject
+from pyrp.strings import String
+from pyrp.numbers import numbers
+from pyrp.boolean import Boolean
+
+from pyrp.function import variable_get
+from pyrp.function import variable_set
+
+from pyrp.function import pyrp_print
+from pyrp.function import pyrp_input
+
+from pyrp.operators import operators
 
 
-class String(PyRPObject):
-    def __init__(self, module, *args, **kwargs):
-        PyRPObject.__init__(self)
-        self.string = args[0]
+types = {
+    unicode: 'str',
+    bool: 'bool'
+}
 
-    def __str__(self):
-        return self.string
+objects = {
+    # Types
+    'str': String,
+    'bool': Boolean,
 
-    def __cmp__(self, other):
-        a = self.string
-        b = other.string
-        return 0 if a == b else -1 if a < b else 1
+    # Functions
+    'get': variable_get,
+    'set': variable_set,
+
+    'print': pyrp_print,
+    'input': pyrp_input
+}
+
+# Add operators
+
+objects = dict(objects.items() + operators.items())
+
+# Add  number types
+for i in numbers:
+    types[numbers[i][0]] = i
+    objects[i] = numbers[i][1]

@@ -15,22 +15,14 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.objects.strings import String
+from pyrp.object import PyRPObject
 
 
-def pyrp_print(module, *args, **kwargs):
-    arguments = map(lambda arg: str(arg), args)
-    print ' '.join(arguments)
+class Boolean(PyRPObject):
+    def __init__(self, module, *args, **kwargs):
+        PyRPObject.__init__(self)
+        self.module = module
+        self.value = bool(args[0])
 
-
-def pyrp_input(module, *args, **kwargs):
-    prompt = str(args[0]) + ' '
-    return String(module, raw_input(prompt))
-
-
-def variable_set(module, *args, **kwargs):
-    module.objects[str(args[0])] = args[1]
-
-
-def variable_get(module, *args, **kwargs):
-    return module.objects[str(args[0])]
+    def __str__(self):
+        return 'true' if self.value else 'false'
