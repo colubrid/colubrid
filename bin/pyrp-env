@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #
 # Copyright (C) 2013 S. Daniel Francis <francis@sugarlabs.org>
+# Copyright (C) 2013 Rodrigo Curbel <tutorialesanonymous@gmail.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,4 +24,4 @@ import sys
 os.environ['PYTHONPATH'] = os.path.join(os.path.abspath(os.curdir), 'lib')
 os.environ['PATH'] += ':' + os.path.join(os.path.abspath(os.curdir), 'bin')
 
-os.system(' '.join(sys.argv[1:]))
+os.system('pyrp-shell' if len(sys.argv) == 1 else ' '.join(sys.argv[1:]))
