@@ -22,7 +22,7 @@ class Number(PyRPObject):
     overtypes = []
 
     def __init__(self, module):
-        PyRPObject.__init__(self)
+        PyRPObject.__init__(self, module)
         self.module = module
 
     def __str__(self):
@@ -67,12 +67,15 @@ class Number(PyRPObject):
 
 
 class Int(Number):
+    __name__ = 'int'
+
     def __init__(self, module, *args, **kwargs):
         Number.__init__(self, module)
         self.number = int(args[0])
 
 
 class Float(Number):
+    __name__ = 'float'
     overtypes = [Int]
 
     def __init__(self, module, *args, **kwargs):

@@ -25,9 +25,8 @@ from pyrp.object import PyRPObject
 class Module(PyRPObject):
     def __init__(self, filepath, main=False):
         self.__name__ = os.path.basename(filepath)
-        PyRPObject.__init__(self)
+        PyRPObject.__init__(self, None)
 
-        self.objects = {}
         self.build_objects()
 
         file_object = open(filepath, 'r')
@@ -41,9 +40,6 @@ class Module(PyRPObject):
         if main:
             self.run()
 
-    def build_objects(self):
-        for i in builtin.objects:
-            self.objects[i] = builtin.objects[i]
 
     def parse_line(self, line):
         line_type = type(line)

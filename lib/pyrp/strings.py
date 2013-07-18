@@ -19,8 +19,10 @@ from pyrp.object import PyRPObject
 
 
 class String(PyRPObject):
+    __name__ = 'str'
+
     def __init__(self, module, *args, **kwargs):
-        PyRPObject.__init__(self)
+        PyRPObject.__init__(self, module)
         self.string = args[0]
 
     def __str__(self):

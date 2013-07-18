@@ -19,10 +19,18 @@ from pyrp.core import log
 
 
 class PyRPObject:
-    __name__ = "none"
+    __name__ = 'object'
 
-    def __init__(self):
-        self.logger = log.get_logger(self.__name__)
+    def __init__(self, parent):
+        self.logger_name = '%s:%s' % (parent.logger_name, self.__name__)\
+                            if parent is not None else self.__name__
+        self.logger = log.get_logger(self.logger_name)
+        self.objects = {}
+
+    def build_objects(self):
+        from pyrp import builtin # Builtin types are pyrp objects
+        for i in builtin.objects:
+            self.objects[i] = builtin.objects[i]
 
     def create_object(self, expression):
         try:
