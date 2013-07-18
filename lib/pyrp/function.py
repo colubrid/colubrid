@@ -24,4 +24,4 @@ class Function(PyRPObject):
         PyRPObject.__init__(self, parent)
 
     def __call__(self, *args, **kwargs):
-        self.function(*args, **kwargs)
+        return self.function(*args, **kwargs)
