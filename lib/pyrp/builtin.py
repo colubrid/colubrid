@@ -15,25 +15,11 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.functions import variable_get
-from pyrp.functions import variable_set
-
-from pyrp.functions import pyrp_print
-from pyrp.functions import pyrp_input
-
 from pyrp.operators import operators
 
 
 types = {}
-
-objects = {
-    # Functions
-    'get': variable_get,
-    'set': variable_set,
-
-    'print': pyrp_print,
-    'input': pyrp_input
-}
+objects = {}
 
 
 def add_type(pyrptype):

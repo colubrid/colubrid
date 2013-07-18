@@ -15,22 +15,44 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
+from pyrp.function import Function
 from pyrp.string import String
 
 
-def pyrp_print(module, *args, **kwargs):
-    arguments = map(lambda arg: str(arg), args)
-    print ' '.join(arguments)
+class Print(Function):
+    __pyrpname__ = 'print'
+
+    def __call__(self, module, *args, **kwargs):
+        arguments = map(lambda arg: str(arg), args)
+        print ' '.join(arguments)
 
 
-def pyrp_input(module, *args, **kwargs):
-    prompt = str(args[0]) + ' '
-    return String(module, raw_input(prompt))
+class Input(Function):
+    __pyrpname__ = 'input'
+
+    def __call__(self, module, *args, **kwargs):
+        prompt = str(args[0]) + ' '
+        return String(module, raw_input(prompt))
 
 
-def variable_set(module, *args, **kwargs):
-    module.objects[str(args[0])] = args[1]
+class Set(Function):
+    __pyrpname__ = 'set'
+
+    def __call__(self, module, *args, **kwargs):
+        module.objects[str(args[0])] = args[1]
 
 
-def variable_get(module, *args, **kwargs):
-    return module.objects[str(args[0])]
+class Get(Function):
+    __pyrpname__ = 'get'
+
+    def __call__(self, module, *args, **kwargs):
+        return module.objects[str(args[0])]
+
+
+functions = [
+    Get(),
+    Set(),
+
+    Input(),
+    Print()
+]

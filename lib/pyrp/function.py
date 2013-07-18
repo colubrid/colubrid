@@ -15,21 +15,10 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp import builtin
-from pyrp.boolean import Boolean
-from pyrp.functions import functions
-from pyrp.module import Module
-from pyrp.numbers import numbers
-from pyrp.string import String
-
-builtin_objects = [Boolean, String]
-builtin_objects += functions
-for i in numbers:
-    builtin_objects.append(numbers[i][1])
-
-for i in builtin_objects:
-    builtin.add_type(i)
+from pyrp.object import PyRPObject
 
 
-def main(filepath):
-    Module(filepath, main=True)
+class Function(PyRPObject):
+    def __init__(self, parent=None):
+        self.__name__ = self.__pyrpname__
+        PyRPObject.__init__(self, parent)
