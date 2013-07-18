@@ -24,7 +24,7 @@ class Arithmetic(Function):
         self.__pyrpname__ = name
         self.operation = operation
 
-    def __call__(self, module, *args, **kwargs):
+    def function(self, module, *args, **kwargs):
         current = args[0]
         for i in args[1:]:
             current = self.operation(current, i)
@@ -36,7 +36,7 @@ class Comparator(Function):
         self.__pyrpname__ = name
         self.operation = operation
 
-    def __call__(self, module, *args, **kwargs):
+    def function(self, module, *args, **kwargs):
         first = args[0]
         for i in args[1:]:
             if not self.operation(first, i):

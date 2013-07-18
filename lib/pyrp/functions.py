@@ -22,7 +22,7 @@ from pyrp.string import String
 class Print(Function):
     __pyrpname__ = 'print'
 
-    def __call__(self, module, *args, **kwargs):
+    def function(self, module, *args, **kwargs):
         arguments = map(lambda arg: str(arg), args)
         print ' '.join(arguments)
 
@@ -30,7 +30,7 @@ class Print(Function):
 class Input(Function):
     __pyrpname__ = 'input'
 
-    def __call__(self, module, *args, **kwargs):
+    def function(self, module, *args, **kwargs):
         prompt = str(args[0]) + ' '
         return String(module, raw_input(prompt))
 
@@ -38,14 +38,14 @@ class Input(Function):
 class Set(Function):
     __pyrpname__ = 'set'
 
-    def __call__(self, module, *args, **kwargs):
+    def function(self, module, *args, **kwargs):
         module.objects[str(args[0])] = args[1]
 
 
 class Get(Function):
     __pyrpname__ = 'get'
 
-    def __call__(self, module, *args, **kwargs):
+    def function(self, module, *args, **kwargs):
         return module.objects[str(args[0])]
 
 

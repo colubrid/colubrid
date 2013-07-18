@@ -22,3 +22,6 @@ class Function(PyRPObject):
     def __init__(self, parent=None):
         self.__name__ = self.__pyrpname__
         PyRPObject.__init__(self, parent)
+
+    def __call__(self, *args, **kwargs):
+        self.function(*args, **kwargs)
