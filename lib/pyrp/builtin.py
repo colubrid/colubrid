@@ -15,11 +15,11 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.function import variable_get
-from pyrp.function import variable_set
+from pyrp.functions import variable_get
+from pyrp.functions import variable_set
 
-from pyrp.function import pyrp_print
-from pyrp.function import pyrp_input
+from pyrp.functions import pyrp_print
+from pyrp.functions import pyrp_input
 
 from pyrp.operators import operators
 

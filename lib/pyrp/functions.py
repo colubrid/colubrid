@@ -15,7 +15,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.strings import String
+from pyrp.string import String
 
 
 def pyrp_print(module, *args, **kwargs):

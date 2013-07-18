@@ -19,7 +19,7 @@ from pyrp import builtin
 from pyrp.boolean import Boolean
 from pyrp.module import Module
 from pyrp.numbers import numbers
-from pyrp.strings import String
+from pyrp.string import String
 
 builtin_types = [Boolean, String]
 for i in numbers:
