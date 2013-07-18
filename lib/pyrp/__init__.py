@@ -15,7 +15,19 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
+from pyrp import builtin
+from pyrp.boolean import Boolean
 from pyrp.module import Module
+from pyrp.numbers import numbers
+from pyrp.strings import String
+
+builtin_types = [Boolean, String]
+for i in numbers:
+    builtin_types.append(numbers[i][1])
+
+for i in builtin_types:
+    builtin.add_type(i)
+
 
 def main(filepath):
     Module(filepath, main=True)

@@ -15,10 +15,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.strings import String
-from pyrp.numbers import numbers
-from pyrp.boolean import Boolean
-
 from pyrp.function import variable_get
 from pyrp.function import variable_set
 
@@ -28,16 +24,9 @@ from pyrp.function import pyrp_input
 from pyrp.operators import operators
 
 
-types = {
-    unicode: 'str',
-    bool: 'bool'
-}
+types = {}
 
 objects = {
-    # Types
-    'str': String,
-    'bool': Boolean,
-
     # Functions
     'get': variable_get,
     'set': variable_set,
@@ -46,11 +35,12 @@ objects = {
     'input': pyrp_input
 }
 
+
+def add_type(pyrptype):
+    objects[pyrptype.__pyrpname__] = pyrptype
+    if pyrptype.__converttype__ is not None:
+        types[pyrptype.__converttype__] = pyrptype.__pyrpname__
+
 # Add operators
 
 objects = dict(objects.items() + operators.items())
-
-# Add  number types
-for i in numbers:
-    types[numbers[i][0]] = i
-    objects[i] = numbers[i][1]

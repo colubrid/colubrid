@@ -19,11 +19,12 @@ from pyrp.core import log
 
 
 class PyRPObject:
-    __name__ = 'object'
+    __pyrpname__ = 'object'
+    __converttype__ = None
 
     def __init__(self, parent):
-        self.logger_name = '%s:%s' % (parent.logger_name, self.__name__)\
-                            if parent is not None else self.__name__
+        self.logger_name = '%s:%s' % (parent.logger_name, self.__pyrpname__)\
+                            if parent is not None else self.__pyrpname__
         self.logger = log.get_logger(self.logger_name)
         self.objects = {}
 

@@ -19,7 +19,8 @@ from pyrp.object import PyRPObject
 
 
 class String(PyRPObject):
-    __name__ = 'str'
+    __pyrpname__ = 'str'
+    __converttype__ = unicode
 
     def __init__(self, module, *args, **kwargs):
         PyRPObject.__init__(self, module)

@@ -20,7 +20,8 @@ from pyrp.core import log
 
 
 class Boolean(PyRPObject):
-    __name__ = 'bool'
+    __pyrpname__ = 'bool'
+    __converttype__ = bool
 
     def __init__(self, module, *args, **kwargs):
         PyRPObject.__init__(self, module)

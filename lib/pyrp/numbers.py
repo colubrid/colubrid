@@ -67,7 +67,8 @@ class Number(PyRPObject):
 
 
 class Int(Number):
-    __name__ = 'int'
+    __pyrpname__ = 'int'
+    __converttype__ = int
 
     def __init__(self, module, *args, **kwargs):
         Number.__init__(self, module)
@@ -75,7 +76,8 @@ class Int(Number):
 
 
 class Float(Number):
-    __name__ = 'float'
+    __pyrpname__ = 'float'
+    __converttype__ = float
     overtypes = [Int]
 
     def __init__(self, module, *args, **kwargs):
