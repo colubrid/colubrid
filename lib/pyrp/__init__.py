@@ -20,15 +20,17 @@ from pyrp.boolean import Boolean
 from pyrp.functions import functions
 from pyrp.module import Module
 from pyrp.numbers import numbers
+from pyrp.operators import operators
 from pyrp.string import String
 
 builtin_objects = [Boolean, String]
 builtin_objects += functions
+builtin_objects += operators
 for i in numbers:
     builtin_objects.append(numbers[i][1])
 
 for i in builtin_objects:
-    builtin.add_type(i)
+    builtin.add_object(i)
 
 
 def main(filepath):

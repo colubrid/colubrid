@@ -15,18 +15,11 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.operators import operators
-
-
 types = {}
 objects = {}
 
 
-def add_type(pyrptype):
+def add_object(pyrptype):
     objects[pyrptype.__pyrpname__] = pyrptype
     if pyrptype.__converttype__ is not None:
         types[pyrptype.__converttype__] = pyrptype.__pyrpname__
-
-# Add operators
-
-objects = dict(objects.items() + operators.items())
