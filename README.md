@@ -1,4 +1,4 @@
-pyrp
+PyRP
 ====
 
 Python-based Runtime Platform
@@ -6,15 +6,15 @@ Python-based Runtime Platform
 Using a development environment
 -------------------------------
 
-To run a pyrp command, you need to type:
+Commands can be run through:
 ```shell
-$ bin/pyrp-command (pyrp)
+$ bin/pyrp-env COMMAND
 ```
 
 There is an interactive shell for development:
 ```shell
-$ bin/pyrp-shell
-[$] (pyrp)
+$ bin/pyrp-env
+[$] COMMAND
 ```
 
 The file interpreter
@@ -29,3 +29,12 @@ Writting PyRP code
 ------------------
 
 See code examples in the ``examples`` directory.
+
+Testing PyRP
+------------
+
+There is an automated testing suite.
+```shell
+$ pyrp-test
+```
+This will run all tests located at the ``tests`` directory.
