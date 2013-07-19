@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #
 # Copyright (C) 2013 Rodrigo Curbelo <tutorialesanonymous@gmail.com>
+# Copyright (C) 2013 Daniel Francis <francis@sugarlabs.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,7 +23,10 @@ import os
 tests = os.listdir('tests')
 
 for test in tests:
-    name, ext = test.split('.')
+    try:
+        name, ext = test.split('.')
+    except:
+        continue
     if ext == 'pyrp':
         message = 'Running test "%s"' % name
         print message
@@ -31,3 +35,4 @@ for test in tests:
         failed = os.system("pyrp %s" % test_path)
         if failed:
             print "Failed test %s" % name
+        print
