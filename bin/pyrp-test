@@ -24,7 +24,9 @@ tests = os.listdir('tests')
 for test in tests:
     name, ext = test.split('.')
     if ext == 'pyrp':
-        print "Running test %s" % name
+        message = 'Running test "%s"' % name
+        print message
+        print '-' * len(message)
         test_path = os.path.join('tests', test)
         failed = os.system("pyrp %s" % test_path)
         if failed:
