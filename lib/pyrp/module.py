@@ -30,9 +30,13 @@ class Module(PyRPObject):
         self.build_objects()
 
         file_object = open(filepath, 'r')
-        content = json.load(file_object)
-        self.content = []
+        script = file_object.read()
         file_object.close()
+        script = script.replace('\'', '"')
+        script = script.replace('(', '[')
+        script = script.replace(')', ']')
+        content = json.loads(script)
+        self.content = []
 
         for i in content:
             self.parse_line(i)
