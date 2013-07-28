@@ -63,7 +63,7 @@ class Number(PyRPObject):
 
     @binary_operator
     def __cmp__(module, a, b):
-        return a.__cmp__(b)
+        return 0 if a == b else 1 if a > b else -1
 
 
 class Int(Number):
