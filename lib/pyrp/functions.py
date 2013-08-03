@@ -17,6 +17,7 @@
 
 from pyrp.function import Function
 from pyrp.string import String
+from pyrp import builtin
 
 
 class Print(Function):
@@ -46,13 +47,21 @@ class Get(Function):
     __pyrpname__ = 'get'
 
     def function(self, module, *args, **kwargs):
-        return module.objects[str(args[0])]
+        name = str(args[0])
+        if name in module.objects:
+            return module.objects[name]
+        else:
+            return builtin.objects[name]
 
+rpget = Get()
+rpset = Set()
+rpinput = Input()
+rpprint = Print()
 
 functions = [
-    Get(),
-    Set(),
+    rpget,
+    rpset,
 
-    Input(),
-    Print()
+    rpinput,
+    rpprint
 ]

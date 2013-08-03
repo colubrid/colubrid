@@ -15,13 +15,26 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
+from pyrp.object import DEP
 from pyrp.object import PyRPObject
 
 
 class Function(PyRPObject):
+    __relation__ = DEP
+    build_args = True
+
     def __init__(self, parent=None):
         self.__name__ = self.__pyrpname__
         PyRPObject.__init__(self, parent)
+        self.master = self
 
-    def __call__(self, *args, **kwargs):
-        return self.function(*args, **kwargs)
+    def __call__(self, module, *args, **kwargs):
+        if module:
+            self.master = module
+        if self.build_args:
+            argv = map(self.master.create_object, args)
+            kwargv = self.master.create_kwargs(kwargs)
+        else:
+            argv = args
+            kwargv = kwargs
+        return self.function(module, *argv, **kwargv)

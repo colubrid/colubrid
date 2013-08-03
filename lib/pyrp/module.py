@@ -19,15 +19,16 @@ import os
 import json
 from pyrp.core import log
 from pyrp import builtin
+from pyrp.object import INDEP
 from pyrp.object import PyRPObject
 
 
 class Module(PyRPObject):
+    __relation__ = INDEP
+
     def __init__(self, filepath, main=False):
         self.__pyrpname__ = os.path.basename(filepath)
         PyRPObject.__init__(self, None)
-
-        self.build_objects()
 
         file_object = open(filepath, 'r')
         script = file_object.read()

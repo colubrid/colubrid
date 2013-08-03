@@ -17,28 +17,37 @@
 
 from pyrp.core import log
 
+INDEP = 1
+DEP = 0
+PART = -1
+
 
 class PyRPObject:
     __pyrpname__ = 'object'
     __converttype__ = None
+    __relation__ = PART
 
     def __init__(self, parent):
         self.logger_name = '%s:%s' % (parent.logger_name, self.__pyrpname__)\
                             if parent is not None else self.__pyrpname__
         self.logger = log.get_logger(self.logger_name)
         self.objects = {}
+        if parent:
+            self.build_objects(parent)
 
-    def build_objects(self):
-        from pyrp import builtin # Builtin types are pyrp objects
-        for i in builtin.objects:
-            self.objects[i] = builtin.objects[i]
+    def build_objects(self, parent):
+        if self.__relation__ == PART:
+            self.objects = parent.objects
+        elif self.__relation__ == DEP:
+            for i in parent.objects:
+                self.objects[i] = parent.objects[i]
 
     def create_object(self, expression):
+        from pyrp.functions import rpget
         try:
             if type(expression) == list:  # This object needs to be built.
-                args = map(self.create_object, expression[1])
-                kwargs = self.create_kwargs(expression[2])
-                return self.objects[expression[0]](self, *args, **kwargs)
+                name, args, kwargs = expression
+                return rpget(self, expression[0])(self, *args, **kwargs)
             else:  # This object is already built
                 return expression
         except:
