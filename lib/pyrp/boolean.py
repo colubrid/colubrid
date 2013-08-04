@@ -16,7 +16,6 @@
 # MA 02110-1301, USA.
 
 from pyrp.object import PyRPObject
-from pyrp.core import log
 
 
 class Boolean(PyRPObject):
@@ -27,7 +26,9 @@ class Boolean(PyRPObject):
         PyRPObject.__init__(self, module)
         self.module = module
         self.value = bool(args[0])
-        log.debug('Hello World', self.logger)
 
     def __str__(self):
         return 'true' if self.value else 'false'
+
+    def __nonzero__(self):
+        return self.value

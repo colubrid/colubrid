@@ -19,11 +19,13 @@ from pyrp.boolean import Boolean
 from pyrp.function import Function
 
 
-class Arithmetic(Function):
+class Operator(Function):
     def __init__(self, name, operation):
         self.__pyrpname__ = name
         self.operation = operation
 
+
+class Arithmetic(Operator):
     def function(self, module, *args, **kwargs):
         current = args[0]
         for i in args[1:]:
@@ -31,15 +33,27 @@ class Arithmetic(Function):
         return current
 
 
-class Comparator(Function):
-    def __init__(self, name, operation):
-        self.__pyrpname__ = name
-        self.operation = operation
-
+class Comparator(Operator):
     def function(self, module, *args, **kwargs):
         first = args[0]
         for i in args[1:]:
             if not self.operation(first, i):
+                return Boolean(module, False)
+        return Boolean(module, True)
+
+
+class LogicalBin(Operator):
+    def function(self, module, *args, **kwargs):
+        current = args[0]
+        for i in args[1:]:
+            current = Boolean(module, self.operation(current, i))
+        return current
+
+
+class LogicalUn(Operator):
+    def function(self, module, *args, **kwargs):
+        for i in args:
+            if not self.operation(i):
                 return Boolean(module, False)
         return Boolean(module, True)
 
@@ -52,5 +66,9 @@ operators = [
 
              Comparator('>', lambda a, b: a > b),
              Comparator('<', lambda a, b: a < b),
-             Comparator('=', lambda a, b: a == b)
+             Comparator('=', lambda a, b: a == b),
+
+             LogicalBin('and', lambda a, b: a and b),
+             LogicalBin('or', lambda a, b: a or b),
+             LogicalUn('not', lambda a: not a)
 ]
