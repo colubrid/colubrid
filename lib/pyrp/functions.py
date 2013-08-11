@@ -39,18 +39,19 @@ class Input(Function):
 class Set(Function):
     __pyrpname__ = 'set'
 
-    def function(self, module, *args, **kwargs):
+    def function(self, parent, *args, **kwargs):
         for name in kwargs:
-            module.objects[str(name)] = kwargs[name]
+            parent.set_object(str(name), kwargs[name])
 
 
 class Get(Function):
     __pyrpname__ = 'get'
 
-    def function(self, module, *args, **kwargs):
+    def function(self, parent, *args, **kwargs):
         name = str(args[0])
-        if name in module.objects:
-            return module.objects[name]
+        exists = parent.has_object(name)
+        if exists:
+            return parent.get_object(name, exists)
         else:
             return builtin.objects[name]
 

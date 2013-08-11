@@ -21,9 +21,9 @@ from pyrp.object import PyRPObject
 class Code(PyRPObject):
     __pyrpname__ = ''
 
-    def __init__(self, module, *args, **kwargs):
-        PyRPObject.__init__(self, module)
+    def __init__(self, parent, *args, **kwargs):
+        PyRPObject.__init__(self, parent)
         self.instructions = args
 
-    def __call__(self, module, *args, **kwargs):
-        map(module.create_object, self.instructions)
+    def __call__(self, parent, *args, **kwargs):
+        map(self.create_object, self.instructions)

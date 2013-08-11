@@ -24,11 +24,13 @@ class IfConditional(Function):
     def function(self, module, *args, **kwargs):
         if args[0] and kwargs.has_key(u'do'):
             kwargs['do'](self)
+        else:
+            if kwargs.has_key(u'else'):
+                kwargs['else'](self)
 
 
 class IfCache(IfConditional):
     def __init__(self):
-        IfConditional.__init__(self)
         self.instances = {}
 
     def __call__(self, module, *args, **kwargs):

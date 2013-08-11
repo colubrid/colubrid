@@ -32,15 +32,36 @@ class PyRPObject:
                             if parent is not None else self.__pyrpname__
         self.logger = log.get_logger(self.logger_name)
         self.objects = {}
-        if parent:
-            self.build_objects(parent)
+        self.parent = parent
 
-    def build_objects(self, parent):
-        if self.__relation__ == PART:
-            self.objects = parent.objects
-        elif self.__relation__ == DEP:
-            for i in parent.objects:
-                self.objects[i] = parent.objects[i]
+    def has_object(self, name):
+        if name in self.objects:
+            return 2
+        if self.parent:
+            if self.parent.has_object(name):
+                return 1
+        else:
+            return 0
+
+    def get_object(self, name, place=None):
+        if place is None:
+            place = self.has_object(name)
+        if place > 0:
+            if place == 1:
+                return self.parent.get_object(name)
+            else:
+                return self.objects[name]
+        else:
+            return None
+
+    def set_object(self, name, obj):
+        where = self.has_object(name)
+        here = False if self.__relation__ == PART else False\
+                if self.__relation__ == DEP and where == 1 else True
+        if here:
+            self.objects[name] = obj
+        else:
+            self.parent.set_object(name, obj)
 
     def create_object(self, expression):
         from pyrp.functions import rpget
