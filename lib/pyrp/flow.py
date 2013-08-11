@@ -18,24 +18,50 @@
 from pyrp.function import Function
 
 
+class Cache:
+    def __init__(self, func):
+        self.instances = {}
+        self.func = func
+
+    def __call__(self, module, *args, **kwargs):
+        if not module in self.instances:
+            self.instances[module] = self.func(module)
+        return self.instances[module](module, *args, **kwargs)
+
+
 class IfConditional(Function):
     __pyrpname__ = 'if'
 
     def function(self, module, *args, **kwargs):
-        if args[0] and kwargs.has_key(u'do'):
+        if args[0] and kwargs.has_key('do'):
             kwargs['do'](self)
         else:
             if kwargs.has_key(u'else'):
                 kwargs['else'](self)
 
 
-class IfCache(IfConditional):
-    def __init__(self):
-        self.instances = {}
+class AskConditional(Function):
+    __pyrpname__ = '?'
+    build_args = False
 
-    def __call__(self, module, *args, **kwargs):
-        if not module in self.instances:
-            self.instances[module] = IfConditional(module)
-        return self.instances[module](module, *args, **kwargs)
+    def function(self, module, *args, **kwargs):
+        if self.create_object(args[0]):
+            return self.create_object(kwargs['if'])
+        else:
+            return self.create_object(kwargs['else'])
+
+
+class IfCache(Cache, IfConditional):
+    def __init__(self):
+        Cache.__init__(self, IfConditional)
+
+
+class AskCache(Cache, AskConditional):
+    def __init__(self):
+        Cache.__init__(self, AskConditional)
+
 
 If = IfCache()
+Ask = AskCache()
+
+conditionals = [If, Ask]

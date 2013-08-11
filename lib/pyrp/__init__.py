@@ -18,17 +18,19 @@
 from pyrp import builtin
 from pyrp.boolean import Boolean
 from pyrp.code import Code
+from pyrp.flow import conditionals
 from pyrp.functions import functions
-from pyrp.flow import If
 from pyrp.list import List
 from pyrp.module import Module
 from pyrp.numbers import numbers
 from pyrp.operators import operators
 from pyrp.string import String
 
-builtin_objects = [Boolean, Code, If, List, String]
+builtin_objects = [Boolean, Code, List, String]
+builtin_objects += conditionals
 builtin_objects += functions
 builtin_objects += operators
+
 for i in numbers:
     builtin_objects.append(numbers[i][1])
 
