@@ -59,3 +59,6 @@ class PyRPObject:
         for key in kwargs:
             kwdict[key] = self.create_object(kwargs[key])
         return kwdict
+
+    def __str__(self):
+        return self.__repr__()

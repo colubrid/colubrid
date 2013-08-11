@@ -25,11 +25,8 @@ class List(PyRPObject):
         PyRPObject.__init__(self, module)
         self.array = map(module.create_object, args)
 
-    def __str__(self):
-        return str(self.array)
-
     def __repr__(self):
-        return self.array.__repr__()
+        return '[\'list\', (%s)]' % self.array.__repr__()[1:-1]
 
     def __getitem__(self, item):
         return self.array(item)
