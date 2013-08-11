@@ -68,6 +68,7 @@ class PyRPObject:
         try:
             if type(expression) == list:  # This object needs to be built.
                 name, args, kwargs = expression
+                name = self.create_object(name)
                 return rpget(self, name)(self, *args, **kwargs)
             else:  # This object is already built
                 return expression

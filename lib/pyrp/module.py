@@ -58,6 +58,8 @@ class Module(PyRPObject):
                 elif length > 1:
                     name = expression[0]
                     line = name == ''
+                    if type(name) != str:
+                        name = self.check_object(name)
                     args = map(lambda arg: self.check_object(arg, line=line),
                                expression[1])
                     kwargs = self.check_kwargs(expression[2]) if length == 3 \
