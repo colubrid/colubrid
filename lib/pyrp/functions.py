@@ -40,7 +40,8 @@ class Set(Function):
     __pyrpname__ = 'set'
 
     def function(self, module, *args, **kwargs):
-        module.objects[str(args[0])] = args[1]
+        for name in kwargs:
+            module.objects[str(name)] = kwargs[name]
 
 
 class Get(Function):

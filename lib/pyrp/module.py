@@ -41,20 +41,14 @@ class Module(PyRPObject):
         self.content = []
 
         for i in content:
-            self.parse_line(i)
+            checked = self.check_object(i, line=True)
+            if checked:
+                self.content.append(checked)
 
         if main:
             self.run()
 
-    def parse_line(self, line):
-        line_type = type(line)
-        if line_type == dict:
-            for i in line:
-                self.content.append(self.check_object(['set', [i, line[i]], {}]))
-        else:
-            self.content.append(self.check_object(line))
-
-    def check_object(self, expression):
+    def check_object(self, expression, line=False):
         expression_type = type(expression)
         try:
             if expression_type == list:
@@ -62,10 +56,19 @@ class Module(PyRPObject):
                 if length == 1:
                     return ['get', [expression[0]], {}]
                 elif length > 1:
-                    args = map(self.check_object, expression[1])
+                    name = expression[0]
+                    line = name == ''
+                    args = map(lambda arg: self.check_object(arg, line=line),
+                               expression[1])
                     kwargs = self.check_kwargs(expression[2]) if length == 3 \
                                     else {}
-                    return [expression[0], args, kwargs]
+                    return [name, args, kwargs]
+            elif line:
+                if expression_type == dict:
+                    kwargs = self.check_kwargs(expression)
+                    return ['set', [], kwargs]
+                elif expression_type == str:
+                    return
             elif expression_type in builtin.types:
                 return [builtin.types[expression_type], [expression], {}]
             else:
