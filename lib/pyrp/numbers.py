@@ -28,6 +28,9 @@ class Number(PyRPObject):
     def __str__(self):
         return str(self.number)
 
+    def __repr__(self):
+        return self.number.__repr__()
+
     def binary_operator(func):
         def inner(self, b):
             if isinstance(b, Number):

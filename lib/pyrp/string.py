@@ -29,6 +29,9 @@ class String(PyRPObject):
     def __str__(self):
         return self.string
 
+    def __repr__(self):
+        return self.string.encode('utf-8').__repr__()
+
     def __cmp__(self, other):
         a = self.string
         b = other.string

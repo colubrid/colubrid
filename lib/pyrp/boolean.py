@@ -30,5 +30,8 @@ class Boolean(PyRPObject):
     def __str__(self):
         return 'true' if self.value else 'false'
 
+    def __repr__(self):
+        return self.__str__()
+
     def __nonzero__(self):
         return self.value

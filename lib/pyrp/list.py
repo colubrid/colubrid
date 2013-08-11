@@ -28,6 +28,9 @@ class List(PyRPObject):
     def __str__(self):
         return str(self.array)
 
+    def __repr__(self):
+        return self.array.__repr__()
+
     def __getitem__(self, item):
         return self.array(item)
 
