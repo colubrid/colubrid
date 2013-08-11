@@ -15,26 +15,21 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp import builtin
-from pyrp.boolean import Boolean
-from pyrp.code import Code
-from pyrp.functions import functions
-from pyrp.flow import If
-from pyrp.list import List
-from pyrp.module import Module
-from pyrp.numbers import numbers
-from pyrp.operators import operators
-from pyrp.string import String
-
-builtin_objects = [Boolean, Code, If, List, String]
-builtin_objects += functions
-builtin_objects += operators
-for i in numbers:
-    builtin_objects.append(numbers[i][1])
-
-for i in builtin_objects:
-    builtin.add_object(i)
+from pyrp.object import PyRPObject
 
 
-def main(filepath):
-    Module(filepath, main=True)
+class List(PyRPObject):
+    __pyrpname__ = 'list'
+
+    def __init__(self, module, *args, **kwargs):
+        PyRPObject.__init__(self, module)
+        self.array = map(module.create_object, args)
+
+    def __str__(self):
+        return str(self.array)
+
+    def __getitem__(self, item):
+        return self.array(item)
+
+    def __len__(self):
+        return len(self.array)

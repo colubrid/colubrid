@@ -19,6 +19,7 @@ import os
 import json
 from pyrp.core import log
 from pyrp import builtin
+from pyrp.code import Code
 from pyrp.object import INDEP
 from pyrp.object import PyRPObject
 
@@ -82,5 +83,4 @@ class Module(PyRPObject):
 
     def run(self):
         log.debug('Running', self.logger)
-        for i in self.content:
-            self.create_object(i)
+        Code(self, *self.content)(self)

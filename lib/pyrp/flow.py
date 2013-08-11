@@ -15,26 +15,25 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp import builtin
-from pyrp.boolean import Boolean
-from pyrp.code import Code
-from pyrp.functions import functions
-from pyrp.flow import If
-from pyrp.list import List
-from pyrp.module import Module
-from pyrp.numbers import numbers
-from pyrp.operators import operators
-from pyrp.string import String
-
-builtin_objects = [Boolean, Code, If, List, String]
-builtin_objects += functions
-builtin_objects += operators
-for i in numbers:
-    builtin_objects.append(numbers[i][1])
-
-for i in builtin_objects:
-    builtin.add_object(i)
+from pyrp.function import Function
 
 
-def main(filepath):
-    Module(filepath, main=True)
+class IfConditional(Function):
+    __pyrpname__ = 'if'
+
+    def function(self, module, *args, **kwargs):
+        if args[0] and kwargs.has_key(u'do'):
+            kwargs['do'](self)
+
+
+class IfCache(IfConditional):
+    def __init__(self):
+        IfConditional.__init__(self)
+        self.instances = {}
+
+    def __call__(self, module, *args, **kwargs):
+        if not module in self.instances:
+            self.instances[module] = IfConditional(module)
+        return self.instances[module](module, *args, **kwargs)
+
+If = IfCache()
