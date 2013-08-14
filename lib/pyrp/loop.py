@@ -15,26 +15,23 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.object import PyRPObject
+from pyrp.code import Cache
+from pyrp.function import Function
 
 
-class Code(PyRPObject):
-    __pyrpname__ = ''
+class WhileLoop(Function):
+    __pyrpname__ = 'while'
+    build_args = False
 
-    def __init__(self, parent, *args, **kwargs):
-        PyRPObject.__init__(self, parent)
-        self.instructions = args
-
-    def __call__(self, parent, *args, **kwargs):
-        map(self.create_object, self.instructions)
+    def function(self, parent, *args, **kwargs):
+        wtdo = self.master.create_object(args[-1])
+        while self.master.create_object(args[0]):
+            wtdo(self)
 
 
-class Cache:
-    def __init__(self, func):
-        self.instances = {}
-        self.func = func
+class WhileCache(Cache, WhileLoop):
+    def __init__(self):
+        Cache.__init__(self, WhileLoop)
 
-    def __call__(self, module, *args, **kwargs):
-        if not module in self.instances:
-            self.instances[module] = self.func(module)
-        return self.instances[module](module, *args, **kwargs)
+
+While = WhileCache()

@@ -25,8 +25,9 @@ from pyrp.module import Module
 from pyrp.numbers import numbers
 from pyrp.operators import operators
 from pyrp.string import String
+from pyrp.loop import While
 
-builtin_objects = [Boolean, Code, List, String]
+builtin_objects = [Boolean, Code, List, String, While]
 builtin_objects += conditionals
 builtin_objects += functions
 builtin_objects += operators

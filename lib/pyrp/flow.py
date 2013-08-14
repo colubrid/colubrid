@@ -15,18 +15,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
+from pyrp.code import Cache
 from pyrp.function import Function
-
-
-class Cache:
-    def __init__(self, func):
-        self.instances = {}
-        self.func = func
-
-    def __call__(self, module, *args, **kwargs):
-        if not module in self.instances:
-            self.instances[module] = self.func(module)
-        return self.instances[module](module, *args, **kwargs)
 
 
 class IfConditional(Function):
