@@ -18,7 +18,8 @@
 import os
 import json
 from pyrp.core import log
-from pyrp import builtin
+from pyrp.parser import create_json
+from pyrp.parser import parse
 from pyrp.types.code import Code
 from pyrp.types.object import INDEP
 from pyrp.types.object import PyRPObject
@@ -32,59 +33,18 @@ class Module(PyRPObject):
         PyRPObject.__init__(self, None)
 
         file_object = open(filepath, 'r')
-        script = file_object.read()
+        script = create_json(file_object.read())
         file_object.close()
-        script = script.replace('\'', '"')
-        script = script.replace('(', '[')
-        script = script.replace(')', ']')
         content = json.loads(script)
         self.content = []
 
         for i in content:
-            checked = self.check_object(i, line=True)
+            checked = parse(self, i, line=True)
             if checked:
                 self.content.append(checked)
 
         if main:
             self.run()
-
-    def check_object(self, expression, line=False):
-        expression_type = type(expression)
-        try:
-            if expression_type == list:
-                length = len(expression)
-                if length == 1:
-                    return ['get', [expression[0]], {}]
-                elif length > 1:
-                    name = expression[0]
-                    line = name == ''
-                    if type(name) != str:
-                        name = self.check_object(name)
-                    args = map(lambda arg: self.check_object(arg, line=line),
-                               expression[1])
-                    kwargs = self.check_kwargs(expression[2]) if length == 3 \
-                                    else {}
-                    return [name, args, kwargs]
-            elif line:
-                if expression_type == dict:
-                    kwargs = self.check_kwargs(expression)
-                    return ['set', [], kwargs]
-                elif expression_type == str:
-                    return
-            elif expression_type in builtin.types:
-                return [builtin.types[expression_type], [expression], {}]
-            else:
-                log.error('Syntax error in %s' % expression,
-                            self.logger, stop=True)
-        except:
-            log.raise_traceback('Unknown error when parsing object type %s of %s.\n{tracemsg}' %
-                         (str(expression), expression_type.__name__), log=self.logger)
-
-    def check_kwargs(self, kwargs):
-        kwdict = {}
-        for key in kwargs:
-            kwdict[key] = self.check_object(kwargs[key])
-        return kwdict
 
     def run(self):
         log.debug('Running', self.logger)
