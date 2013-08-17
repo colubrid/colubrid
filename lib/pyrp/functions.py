@@ -15,9 +15,9 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.function import Function
-from pyrp.string import String
 from pyrp import builtin
+from pyrp.types.function import Function
+from pyrp.types.string import String
 
 
 class Print(Function):

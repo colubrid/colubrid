@@ -15,23 +15,21 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.object import PyRPObject
+from pyrp.types.object import PyRPObject
 
 
-class Boolean(PyRPObject):
-    __pyrpname__ = 'bool'
-    __converttype__ = bool
+class List(PyRPObject):
+    __pyrpname__ = 'list'
 
     def __init__(self, module, *args, **kwargs):
         PyRPObject.__init__(self, module)
-        self.module = module
-        self.value = bool(args[0])
-
-    def __str__(self):
-        return 'true' if self.value else 'false'
+        self.array = map(module.create_object, args)
 
     def __repr__(self):
-        return self.__str__()
+        return '[\'list\', (%s)]' % self.array.__repr__()[1:-1]
 
-    def __nonzero__(self):
-        return self.value
+    def __getitem__(self, item):
+        return self.array(item)
+
+    def __len__(self):
+        return len(self.array)

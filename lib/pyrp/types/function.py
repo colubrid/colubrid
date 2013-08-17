@@ -15,26 +15,26 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.object import PyRPObject
+from pyrp.types.object import DEP
+from pyrp.types.object import PyRPObject
 
 
-class Code(PyRPObject):
-    __pyrpname__ = ''
+class Function(PyRPObject):
+    __relation__ = DEP
+    build_args = True
 
-    def __init__(self, parent, *args, **kwargs):
+    def __init__(self, parent=None):
+        self.__name__ = self.__pyrpname__
         PyRPObject.__init__(self, parent)
-        self.instructions = args
-
-    def __call__(self, parent, *args, **kwargs):
-        map(self.create_object, self.instructions)
-
-
-class Cache:
-    def __init__(self, func):
-        self.instances = {}
-        self.func = func
+        self.master = self
 
     def __call__(self, module, *args, **kwargs):
-        if not module in self.instances:
-            self.instances[module] = self.func(module)
-        return self.instances[module](module, *args, **kwargs)
+        if module:
+            self.master = module
+        if self.build_args:
+            argv = map(self.master.create_object, args)
+            kwargv = self.master.create_kwargs(kwargs)
+        else:
+            argv = args
+            kwargv = kwargs
+        return self.function(module, *argv, **kwargv)

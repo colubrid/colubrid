@@ -15,8 +15,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.boolean import Boolean
-from pyrp.function import Function
+from pyrp.types.boolean import Boolean
+from pyrp.types.function import Function
 
 
 class Operator(Function):

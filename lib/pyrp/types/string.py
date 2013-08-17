@@ -15,26 +15,24 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.object import DEP
-from pyrp.object import PyRPObject
+from pyrp.types.object import PyRPObject
 
 
-class Function(PyRPObject):
-    __relation__ = DEP
-    build_args = True
+class String(PyRPObject):
+    __pyrpname__ = 'str'
+    __converttype__ = unicode
 
-    def __init__(self, parent=None):
-        self.__name__ = self.__pyrpname__
-        PyRPObject.__init__(self, parent)
-        self.master = self
+    def __init__(self, module, *args, **kwargs):
+        PyRPObject.__init__(self, module)
+        self.string = args[0]
 
-    def __call__(self, module, *args, **kwargs):
-        if module:
-            self.master = module
-        if self.build_args:
-            argv = map(self.master.create_object, args)
-            kwargv = self.master.create_kwargs(kwargs)
-        else:
-            argv = args
-            kwargv = kwargs
-        return self.function(module, *argv, **kwargv)
+    def __str__(self):
+        return self.string
+
+    def __repr__(self):
+        return self.string.encode('utf-8').__repr__()
+
+    def __cmp__(self, other):
+        a = self.string
+        b = other.string
+        return 0 if a == b else -1 if a < b else 1

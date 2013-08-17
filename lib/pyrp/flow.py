@@ -15,8 +15,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.code import Cache
-from pyrp.function import Function
+from pyrp.types.code import Cache
+from pyrp.types.function import Function
 
 
 class IfConditional(Function):

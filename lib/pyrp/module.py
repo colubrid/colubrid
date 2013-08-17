@@ -19,9 +19,9 @@ import os
 import json
 from pyrp.core import log
 from pyrp import builtin
-from pyrp.code import Code
-from pyrp.object import INDEP
-from pyrp.object import PyRPObject
+from pyrp.types.code import Code
+from pyrp.types.object import INDEP
+from pyrp.types.object import PyRPObject
 
 
 class Module(PyRPObject):

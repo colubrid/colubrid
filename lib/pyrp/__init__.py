@@ -16,24 +16,18 @@
 # MA 02110-1301, USA.
 
 from pyrp import builtin
-from pyrp.boolean import Boolean
-from pyrp.code import Code
 from pyrp.flow import conditionals
 from pyrp.functions import functions
-from pyrp.list import List
 from pyrp.module import Module
-from pyrp.numbers import numbers
 from pyrp.operators import operators
-from pyrp.string import String
+from pyrp.types import types
 from pyrp.loop import While
 
-builtin_objects = [Boolean, Code, List, String, While]
+builtin_objects = [While]
 builtin_objects += conditionals
 builtin_objects += functions
 builtin_objects += operators
-
-for i in numbers:
-    builtin_objects.append(numbers[i][1])
+builtin_objects += types
 
 for i in builtin_objects:
     builtin.add_object(i)
