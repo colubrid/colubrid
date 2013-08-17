@@ -18,9 +18,9 @@
 from pyrp import builtin
 from pyrp.flow import conditionals
 from pyrp.functions import functions
-from pyrp.module import Module
 from pyrp.operators import operators
 from pyrp.types import types
+from pyrp.types.module import Module
 from pyrp.loop import While
 
 builtin_objects = [While]
