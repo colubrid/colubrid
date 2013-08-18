@@ -29,6 +29,10 @@ nosetests.xml
 # Translations
 *.mo
 
+# PyRP compiled
+*.pyrp-json
+*.pyrp-tree
+
 *~
 *.log
 .*.swp*

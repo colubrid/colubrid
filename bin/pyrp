@@ -21,4 +21,4 @@
 import pyrp
 from pyrp.core import args
 
-pyrp.main(args.filepath)
+pyrp.main(args.filepath, args.isjson, args.tree)

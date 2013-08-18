@@ -33,5 +33,5 @@ for i in builtin_objects:
     builtin.add_object(i)
 
 
-def main(filepath):
-    Module(filepath, main=True)
+def main(filepath, isjson, tree):
+    Module(filepath, main=True, isjson=isjson, tree=tree)

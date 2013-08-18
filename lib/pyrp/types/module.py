@@ -28,20 +28,26 @@ from pyrp.types.object import PyRPObject
 class Module(PyRPObject):
     __relation__ = INDEP
 
-    def __init__(self, filepath, main=False):
+    def __init__(self, filepath, main=False, isjson=False, tree=False):
         self.__pyrpname__ = os.path.basename(filepath)
         PyRPObject.__init__(self, None)
 
         file_object = open(filepath, 'r')
-        script = create_json(file_object.read())
+        script = file_object.read()
         file_object.close()
-        content = json.loads(script)
-        self.content = []
 
-        for i in content:
-            checked = parse(self, i, line=True)
-            if checked:
-                self.content.append(checked)
+        if not tree:
+            if not isjson:
+                script = create_json(script)
+            content = json.loads(script)
+            self.content = []
+
+            for i in content:
+                checked = parse(self, i, line=True)
+                if checked:
+                    self.content.append(checked)
+        else:
+            self.content = json.loads(script)
 
         if main:
             self.run()

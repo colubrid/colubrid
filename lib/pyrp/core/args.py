@@ -26,7 +26,11 @@ Usage:
     %s FILE -- Execute a PyRP file.
 """ % argv[0]
 
-helpmsg = """PyRP Options:
+helpmsg = """Interpreter options:
+  -j, --json     Read source file in json format
+  -t, --tree     Read source file in pyrp tree format.
+
+PyRP Options:
   -h, --help     Show this help message and exit.
   -l, --log=PATH Set the PATH to save an output log file.
   -u, --usage    Show program's usage message and exit.
@@ -46,10 +50,25 @@ def showhelp(name=True, usagemsg=True, options=True, code=0):
 if len(argv) <= 1:
     showhelp(code=1)
 
+isjson = False
+tree = False
+
+def set_json():
+    global isjson
+    isjson = True
+
+def set_tree():
+    global tree
+    tree = True
+
+
 booleans = [('-h', '--help', showhelp),
             ('-u', '--usage', lambda: showhelp(name=False, options=False)),
             ('-v', '--version',
-                lambda: showhelp(usagemsg=False, options=False))]
+                lambda: showhelp(usagemsg=False, options=False)),
+            ('-j', '--json', set_json),
+            ('-t', '--tree', set_tree)
+            ]
 
 strings = [('-l', '--log=', log.set_file)]
 
