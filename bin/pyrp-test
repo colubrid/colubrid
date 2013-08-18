@@ -19,20 +19,60 @@
 # MA 02110-1301, USA. 
 
 import os
+import subprocess
+import shutil
 
-tests = os.listdir('tests')
+tests = 'tests'
+generated_files = {'json': 'pyrp-json',
+                   'tree': 'pyrp-tree'}
 
-for test in tests:
-    try:
-        name, ext = test.split('.')
-    except:
+print '= Cleaning files ='
+for i in os.listdir(tests):
+    path = os.path.join(tests, i)
+    if i in generated_files:
+        shutil.rmtree(path)
         continue
-    if ext == 'pyrp':
-        message = 'Running test "%s"' % name
-        print message
-        print '-' * len(message)
-        test_path = os.path.join('tests', test)
-        failed = os.system("pyrp %s" % test_path)
-        if failed:
-            print "Failed test %s" % name
-        print
+    if os.path.splitext(i)[-1] == '.log':
+        os.remove(path)
+
+for i in generated_files:
+    os.mkdir(os.path.join(tests, i))
+
+print '= Building tests ='
+for i in os.listdir(tests):
+    name, ext = os.path.splitext(i)
+    if ext == '.pyrp':
+        print '* Building %s' % i
+        srcpath = os.path.join(tests, i)
+        for step in generated_files:
+            output = os.path.join(tests, step,
+                                  '.'.join([name, generated_files[step]]))
+            failed = os.system('pyrpc -s %s "%s" -o "%s"' %
+                                            (step, srcpath, output))
+            if failed:
+                print 'Failed'
+
+pyrp_args = {'json': '-j', 'tree': '-t'}
+
+print '= Running tests ='
+for path, dirs, files in os.walk(tests):
+    tformat = os.path.split(path)[-1]
+    if tformat == 'tests':
+        tformat = 'source'
+    print '- Testing tests in format %s' % tformat
+    for filename in files:
+        test = os.path.join(path, filename)
+        try:
+            name, ext = filename.split('.')
+        except:
+            continue
+        extensions = [generated_files[i] for i in generated_files] + ['pyrp']
+        if ext in extensions:
+            print '  * Running test "%s"' % name
+            command = ['pyrp', '%s' % test]
+            if tformat in pyrp_args:
+                command.insert(1, pyrp_args[tformat])
+            logfile = open('%s.log' % test, 'w')
+            failed = subprocess.call(command, stdout=logfile, stderr=logfile)
+            if failed:
+                print "Failed test %s" % name

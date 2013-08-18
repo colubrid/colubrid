@@ -33,7 +33,7 @@ argparser = argparse.ArgumentParser(prog='pyrpc',
 argparser.add_argument('source', metavar='SOURCE')
 argparser.add_argument('-o', '--output', metavar='DEST',
                         help='Specify output file destination')
-argparser.add_argument('-s', '--steps', choices=['json', 'tree', 'all'],
+argparser.add_argument('-s', '--steps', choices=['json', 'tree'],
                         default='tree')
 args = argparser.parse_args(sys.argv[1:])
 
