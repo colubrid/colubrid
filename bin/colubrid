@@ -32,7 +32,7 @@ interp_grp.add_argument('file', metavar='FILE', help='File to be interpreted')
 group.add_argument('+j', '++json', action='store_true',
                    help='Read source file in json format')
 group.add_argument('+t', '++tree', action='store_true',
-                   help='Read source file in pyrp tree format')
+                   help='Read source file in colubrid tree format')
 general_opts = parser.add_argument_group('General options')
 general_opts.add_argument('+h', '++help', action='help')
 general_opts.add_argument('+v', '++version', action='version',
