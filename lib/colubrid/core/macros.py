@@ -15,23 +15,15 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.types.object import PyRPObject
+name = 'Colubrid'
+major_version = 0
+minor_version = 0
+micro_version = 1
+status = 0
 
+phases = ['Development Beta', 'Alpha', 'Release Candidate', '']
 
-class Boolean(PyRPObject):
-    __pyrpname__ = 'bool'
-    __converttype__ = bool
+version = '%d.%d.%d %s' % (major_version, minor_version, micro_version,
+                           phases[status])
 
-    def __init__(self, module, *args, **kwargs):
-        PyRPObject.__init__(self, module)
-        self.module = module
-        self.value = bool(args[0])
-
-    def __str__(self):
-        return 'true' if self.value else 'false'
-
-    def __repr__(self):
-        return self.__str__()
-
-    def __nonzero__(self):
-        return self.value
+full_name = '%s %s' % (name, version)

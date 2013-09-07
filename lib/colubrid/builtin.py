@@ -15,13 +15,11 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.types.boolean import Boolean
-from pyrp.types.code import Code
-from pyrp.types.list import List
-from pyrp.types.numbers import numbers
-from pyrp.types.string import String
+types = {}
+objects = {}
 
-types = [Boolean, Code, List, String]
 
-for i in numbers:
-    types.append(numbers[i][1])
+def add_object(colubridtype):
+    objects[colubridtype.__colubridname__] = colubridtype
+    if colubridtype.__converttype__ is not None:
+        types[colubridtype.__converttype__] = colubridtype.__colubridname__

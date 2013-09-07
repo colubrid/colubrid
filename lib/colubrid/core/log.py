@@ -19,7 +19,7 @@ import sys
 import traceback
 import os
 import logging
-from pyrp.core import macros
+from colubrid.core import macros
 
 
 class VoidLogger:

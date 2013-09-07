@@ -15,12 +15,12 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.types.code import Cache
-from pyrp.types.function import Function
+from colubrid.types.code import Cache
+from colubrid.types.function import Function
 
 
 class IfConditional(Function):
-    __pyrpname__ = 'if'
+    __colubridname__ = 'if'
 
     def function(self, module, *args, **kwargs):
         if args[0] and kwargs.has_key('do'):
@@ -31,7 +31,7 @@ class IfConditional(Function):
 
 
 class AskConditional(Function):
-    __pyrpname__ = '?'
+    __colubridname__ = '?'
     build_args = False
 
     def function(self, module, *args, **kwargs):

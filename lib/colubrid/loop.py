@@ -15,21 +15,23 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.types.object import PyRPObject
+from colubrid.types.code import Cache
+from colubrid.types.function import Function
 
 
-class List(PyRPObject):
-    __pyrpname__ = 'list'
+class WhileLoop(Function):
+    __colubridname__ = 'while'
+    build_args = False
 
-    def __init__(self, module, *args, **kwargs):
-        PyRPObject.__init__(self, module)
-        self.array = map(module.create_object, args)
+    def function(self, parent, *args, **kwargs):
+        wtdo = self.master.create_object(args[-1])
+        while self.master.create_object(args[0]):
+            wtdo(self)
 
-    def __repr__(self):
-        return '[\'list\', (%s)]' % self.array.__repr__()[1:-1]
 
-    def __getitem__(self, item):
-        return self.array(item)
+class WhileCache(Cache, WhileLoop):
+    def __init__(self):
+        Cache.__init__(self, WhileLoop)
 
-    def __len__(self):
-        return len(self.array)
+
+While = WhileCache()

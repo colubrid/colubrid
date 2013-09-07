@@ -15,13 +15,13 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.types.boolean import Boolean
-from pyrp.types.function import Function
+from colubrid.types.boolean import Boolean
+from colubrid.types.function import Function
 
 
 class Operator(Function):
     def __init__(self, name, operation):
-        self.__pyrpname__ = name
+        self.__colubridname__ = name
         self.operation = operation
 
 

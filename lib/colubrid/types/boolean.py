@@ -15,23 +15,23 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp import builtin
-from pyrp.flow import conditionals
-from pyrp.functions import functions
-from pyrp.operators import operators
-from pyrp.types import types
-from pyrp.types.module import Module
-from pyrp.loop import While
-
-builtin_objects = [While]
-builtin_objects += conditionals
-builtin_objects += functions
-builtin_objects += operators
-builtin_objects += types
-
-for i in builtin_objects:
-    builtin.add_object(i)
+from colubrid.types.object import ColubridObject
 
 
-def main(filepath, isjson, tree):
-    Module(filepath, main=True, isjson=isjson, tree=tree)
+class Boolean(ColubridObject):
+    __colubridname__ = 'bool'
+    __converttype__ = bool
+
+    def __init__(self, module, *args, **kwargs):
+        ColubridObject.__init__(self, module)
+        self.module = module
+        self.value = bool(args[0])
+
+    def __str__(self):
+        return 'true' if self.value else 'false'
+
+    def __repr__(self):
+        return self.__str__()
+
+    def __nonzero__(self):
+        return self.value

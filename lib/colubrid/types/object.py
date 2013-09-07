@@ -15,21 +15,21 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.core import log
+from colubrid.core import log
 
 INDEP = 1
 DEP = 0
 PART = -1
 
 
-class PyRPObject:
-    __pyrpname__ = 'object'
+class ColubridObject:
+    __colubridname__ = 'object'
     __converttype__ = None
     __relation__ = PART
 
     def __init__(self, parent):
-        self.logger_name = '%s:%s' % (parent.logger_name, self.__pyrpname__)\
-                            if parent is not None else self.__pyrpname__
+        self.logger_name = '%s:%s' % (parent.logger_name, self.__colubridname__)\
+                            if parent is not None else self.__colubridname__
         self.logger = log.get_logger(self.logger_name)
         self.objects = {}
         self.parent = parent
@@ -64,7 +64,7 @@ class PyRPObject:
             self.parent.set_object(name, obj)
 
     def create_object(self, expression):
-        from pyrp.functions import rpget
+        from colubrid.functions import rpget
         try:
             if type(expression) == list:  # This object needs to be built.
                 name, args, kwargs = expression

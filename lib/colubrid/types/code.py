@@ -15,24 +15,26 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.types.object import PyRPObject
+from colubrid.types.object import ColubridObject
 
 
-class String(PyRPObject):
-    __pyrpname__ = 'str'
-    __converttype__ = unicode
+class Code(ColubridObject):
+    __colubridname__ = ''
 
-    def __init__(self, module, *args, **kwargs):
-        PyRPObject.__init__(self, module)
-        self.string = args[0]
+    def __init__(self, parent, *args, **kwargs):
+        ColubridObject.__init__(self, parent)
+        self.instructions = args
 
-    def __str__(self):
-        return self.string
+    def __call__(self, parent, *args, **kwargs):
+        map(self.create_object, self.instructions)
 
-    def __repr__(self):
-        return self.string.encode('utf-8').__repr__()
 
-    def __cmp__(self, other):
-        a = self.string
-        b = other.string
-        return 0 if a == b else -1 if a < b else 1
+class Cache:
+    def __init__(self, func):
+        self.instances = {}
+        self.func = func
+
+    def __call__(self, module, *args, **kwargs):
+        if not module in self.instances:
+            self.instances[module] = self.func(module)
+        return self.instances[module](module, *args, **kwargs)

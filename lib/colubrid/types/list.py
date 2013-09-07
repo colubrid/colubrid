@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-#
 # Copyright (C) 2013 S. Daniel Francis <francis@sugarlabs.org>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -18,7 +15,21 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-import pyrp
-from pyrp.core import args
+from colubrid.types.object import ColubridObject
 
-pyrp.main(args.filepath, args.isjson, args.tree)
+
+class List(ColubridObject):
+    __colubridname__ = 'list'
+
+    def __init__(self, module, *args, **kwargs):
+        ColubridObject.__init__(self, module)
+        self.array = map(module.create_object, args)
+
+    def __repr__(self):
+        return '[\'list\', (%s)]' % self.array.__repr__()[1:-1]
+
+    def __getitem__(self, item):
+        return self.array(item)
+
+    def __len__(self):
+        return len(self.array)

@@ -18,19 +18,19 @@
 import os
 
 from sys import argv
-from pyrp.core import macros
-from pyrp.core import log
+from colubrid.core import macros
+from colubrid.core import log
 
 usage = """
 Usage:
-    %s FILE -- Execute a PyRP file.
+    %s FILE -- Execute a Colubrid file.
 """ % argv[0]
 
 helpmsg = """Interpreter options:
   -j, --json     Read source file in json format
-  -t, --tree     Read source file in pyrp tree format.
+  -t, --tree     Read source file in colubrid tree format.
 
-PyRP Options:
+Colubrid Options:
   -h, --help     Show this help message and exit.
   -l, --log=PATH Set the PATH to save an output log file.
   -u, --usage    Show program's usage message and exit.

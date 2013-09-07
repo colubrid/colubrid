@@ -17,20 +17,20 @@
 
 import os
 import json
-from pyrp.core import log
-from pyrp.parser import create_json
-from pyrp.parser import parse
-from pyrp.types.code import Code
-from pyrp.types.object import INDEP
-from pyrp.types.object import PyRPObject
+from colubrid.core import log
+from colubrid.parser import create_json
+from colubrid.parser import parse
+from colubrid.types.code import Code
+from colubrid.types.object import INDEP
+from colubrid.types.object import ColubridObject
 
 
-class Module(PyRPObject):
+class Module(ColubridObject):
     __relation__ = INDEP
 
     def __init__(self, filepath, main=False, isjson=False, tree=False):
-        self.__pyrpname__ = os.path.basename(filepath)
-        PyRPObject.__init__(self, None)
+        self.__colubridname__ = os.path.basename(filepath)
+        ColubridObject.__init__(self, None)
 
         file_object = open(filepath, 'r')
         script = file_object.read()

@@ -15,8 +15,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.core import log
-from pyrp import builtin
+from colubrid.core import log
+from colubrid import builtin
 
 def create_json(script):
         script = script.replace('\'', '"')

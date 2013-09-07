@@ -15,14 +15,14 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.types.object import PyRPObject
+from colubrid.types.object import ColubridObject
 
 
-class Number(PyRPObject):
+class Number(ColubridObject):
     overtypes = []
 
     def __init__(self, module):
-        PyRPObject.__init__(self, module)
+        ColubridObject.__init__(self, module)
         self.module = module
 
     def __str__(self):
@@ -70,7 +70,7 @@ class Number(PyRPObject):
 
 
 class Int(Number):
-    __pyrpname__ = 'int'
+    __colubridname__ = 'int'
     __converttype__ = int
 
     def __init__(self, module, *args, **kwargs):
@@ -79,7 +79,7 @@ class Int(Number):
 
 
 class Float(Number):
-    __pyrpname__ = 'float'
+    __colubridname__ = 'float'
     __converttype__ = float
     overtypes = [Int]
 

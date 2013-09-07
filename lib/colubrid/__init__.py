@@ -15,23 +15,23 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.types.code import Cache
-from pyrp.types.function import Function
+from colubrid import builtin
+from colubrid.flow import conditionals
+from colubrid.functions import functions
+from colubrid.operators import operators
+from colubrid.types import types
+from colubrid.types.module import Module
+from colubrid.loop import While
+
+builtin_objects = [While]
+builtin_objects += conditionals
+builtin_objects += functions
+builtin_objects += operators
+builtin_objects += types
+
+for i in builtin_objects:
+    builtin.add_object(i)
 
 
-class WhileLoop(Function):
-    __pyrpname__ = 'while'
-    build_args = False
-
-    def function(self, parent, *args, **kwargs):
-        wtdo = self.master.create_object(args[-1])
-        while self.master.create_object(args[0]):
-            wtdo(self)
-
-
-class WhileCache(Cache, WhileLoop):
-    def __init__(self):
-        Cache.__init__(self, WhileLoop)
-
-
-While = WhileCache()
+def main(filepath, isjson, tree):
+    Module(filepath, main=True, isjson=isjson, tree=tree)

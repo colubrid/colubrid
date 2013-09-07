@@ -23,13 +23,13 @@ import os
 import argparse
 import json
 
-import pyrp
-pyrp
-from pyrp.parser import create_json
-from pyrp.types.module import Module
+import colubrid
+colubrid
+from colubrid.parser import create_json
+from colubrid.types.module import Module
 
-argparser = argparse.ArgumentParser(prog='pyrpc',
-        description='Python Runtime Platform Compiler')
+argparser = argparse.ArgumentParser(prog='colubridc',
+        description='Colubrid Compiler')
 argparser.add_argument('source', metavar='SOURCE')
 argparser.add_argument('-o', '--output', metavar='DEST',
                         help='Specify output file destination')
@@ -42,11 +42,11 @@ name, ext = os.path.splitext(args.source)
 if args.steps == 'json':
     sourcefile = open(args.source, 'r')
     source = sourcefile.read()
-    output = source if ext == 'pyrp-json' else create_json(source)
-    dest = args.output or '.'.join([name, 'pyrp-json'])
+    output = source if ext == 'colubrid-json' else create_json(source)
+    dest = args.output or '.'.join([name, 'colubrid-json'])
 else:
     module = Module(args.source)
-    dest = args.output or '.'.join([name, 'pyrp-tree'])
+    dest = args.output or '.'.join([name, 'colubrid-tree'])
     output = json.dumps(module.content)
 
 output_file = open(dest, 'w')

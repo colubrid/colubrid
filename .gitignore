@@ -29,9 +29,9 @@ nosetests.xml
 # Translations
 *.mo
 
-# PyRP compiled
-*.pyrp-json
-*.pyrp-tree
+# Coluibrid compiled
+*.cljs
+*.cltr
 
 *~
 *.log

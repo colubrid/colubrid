@@ -15,13 +15,13 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp import builtin
-from pyrp.types.function import Function
-from pyrp.types.string import String
+from colubrid import builtin
+from colubrid.types.function import Function
+from colubrid.types.string import String
 
 
 class Print(Function):
-    __pyrpname__ = 'print'
+    __colubridname__ = 'print'
 
     def function(self, module, *args, **kwargs):
         arguments = map(lambda arg: str(arg), args)
@@ -29,7 +29,7 @@ class Print(Function):
 
 
 class Input(Function):
-    __pyrpname__ = 'input'
+    __colubridname__ = 'input'
 
     def function(self, module, *args, **kwargs):
         prompt = str(args[0]) + ' '
@@ -37,7 +37,7 @@ class Input(Function):
 
 
 class Set(Function):
-    __pyrpname__ = 'set'
+    __colubridname__ = 'set'
 
     def function(self, parent, *args, **kwargs):
         for name in kwargs:
@@ -45,7 +45,7 @@ class Set(Function):
 
 
 class Get(Function):
-    __pyrpname__ = 'get'
+    __colubridname__ = 'get'
 
     def function(self, parent, *args, **kwargs):
         name = str(args[0])

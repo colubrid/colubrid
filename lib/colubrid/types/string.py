@@ -1,7 +1,4 @@
-#!/usr/bin/env python
-#
 # Copyright (C) 2013 S. Daniel Francis <francis@sugarlabs.org>
-# Copyright (C) 2013 Rodrigo Curbelo <tutorialesanonymous@gmail.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,10 +15,24 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-import os
-import sys
+from colubrid.types.object import ColubridObject
 
-os.environ['PYTHONPATH'] = os.path.join(os.path.abspath(os.curdir), 'lib')
-os.environ['PATH'] += ':' + os.path.join(os.path.abspath(os.curdir), 'bin')
 
-os.system('pyrp-shell' if len(sys.argv) == 1 else ' '.join(sys.argv[1:]))
+class String(ColubridObject):
+    __colubridname__ = 'str'
+    __converttype__ = unicode
+
+    def __init__(self, module, *args, **kwargs):
+        ColubridObject.__init__(self, module)
+        self.string = args[0]
+
+    def __str__(self):
+        return self.string
+
+    def __repr__(self):
+        return self.string.encode('utf-8').__repr__()
+
+    def __cmp__(self, other):
+        a = self.string
+        b = other.string
+        return 0 if a == b else -1 if a < b else 1

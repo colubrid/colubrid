@@ -23,8 +23,8 @@ import subprocess
 import shutil
 
 tests = 'tests'
-generated_files = {'json': 'pyrp-json',
-                   'tree': 'pyrp-tree'}
+generated_files = {'json': 'cljs',
+                   'tree': 'cltr'}
 
 print '= Cleaning files ='
 for i in os.listdir(tests):
@@ -41,18 +41,18 @@ for i in generated_files:
 print '= Building tests ='
 for i in os.listdir(tests):
     name, ext = os.path.splitext(i)
-    if ext == '.pyrp':
+    if ext == '.clsc':
         print '* Building %s' % i
         srcpath = os.path.join(tests, i)
         for step in generated_files:
             output = os.path.join(tests, step,
                                   '.'.join([name, generated_files[step]]))
-            failed = os.system('pyrpc -s %s "%s" -o "%s"' %
+            failed = os.system('colubridc -s %s "%s" -o "%s"' %
                                             (step, srcpath, output))
             if failed:
                 print 'Failed'
 
-pyrp_args = {'json': '-j', 'tree': '-t'}
+colubrid_args = {'json': '+j', 'tree': '+t'}
 
 print '= Running tests ='
 for path, dirs, files in os.walk(tests):
@@ -66,12 +66,12 @@ for path, dirs, files in os.walk(tests):
             name, ext = filename.split('.')
         except:
             continue
-        extensions = [generated_files[i] for i in generated_files] + ['pyrp']
+        extensions = [generated_files[i] for i in generated_files] + ['clsc']
         if ext in extensions:
             print '  * Running test "%s"' % name
-            command = ['pyrp', '%s' % test]
-            if tformat in pyrp_args:
-                command.insert(1, pyrp_args[tformat])
+            command = ['colubrid', '%s' % test]
+            if tformat in colubrid_args:
+                command.insert(1, colubrid_args[tformat])
             logfile = open('%s.log' % test, 'w')
             failed = subprocess.call(command, stdout=logfile, stderr=logfile)
             if failed:

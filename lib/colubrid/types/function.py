@@ -15,17 +15,17 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from pyrp.types.object import DEP
-from pyrp.types.object import PyRPObject
+from colubrid.types.object import DEP
+from colubrid.types.object import ColubridObject
 
 
-class Function(PyRPObject):
+class Function(ColubridObject):
     __relation__ = DEP
     build_args = True
 
     def __init__(self, parent=None):
-        self.__name__ = self.__pyrpname__
-        PyRPObject.__init__(self, parent)
+        self.__name__ = self.__colubridname__
+        ColubridObject.__init__(self, parent)
         self.master = self
 
     def __call__(self, module, *args, **kwargs):

@@ -1,4 +1,7 @@
+#!/usr/bin/env python
+#
 # Copyright (C) 2013 S. Daniel Francis <francis@sugarlabs.org>
+# Copyright (C) 2013 Rodrigo Curbelo <tutorialesanonymous@gmail.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,15 +18,10 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-name = 'Python Runtime Platform'
-major_version = 0
-minor_version = 0
-micro_version = 1
-status = 0
+import os
+import sys
 
-phases = ['Development Beta', 'Alpha', 'Release Candidate', '']
+os.environ['PYTHONPATH'] = os.path.join(os.path.abspath(os.curdir), 'lib')
+os.environ['PATH'] += ':' + os.path.join(os.path.abspath(os.curdir), 'bin')
 
-version = '%d.%d.%d %s' % (major_version, minor_version, micro_version,
-                           phases[status])
-
-full_name = '%s %s' % (name, version)
+os.system('colubrid-shell' if len(sys.argv) == 1 else ' '.join(sys.argv[1:]))

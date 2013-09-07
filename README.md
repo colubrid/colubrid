@@ -1,19 +1,19 @@
-PyRP
-====
+Colubrid
+========
 
-Python-based Runtime Platform
+Programming language interpreter.
 
 Using a development environment
 -------------------------------
 
 Commands can be run through:
 ```shell
-$ bin/pyrp-env COMMAND
+$ bin/colubrid-env COMMAND
 ```
 
 There is an interactive shell for development:
 ```shell
-$ bin/pyrp-env
+$ bin/colubrid-env
 [$] COMMAND
 ```
 
@@ -22,19 +22,30 @@ The file interpreter
 
 The basic usage of pyrp is:
 ```shell
-$ pyrp FILE
+$ colubrid FILE
 ```
 
-Writting PyRP code
-------------------
+Writting Colubrid code
+----------------------
 
 See code examples in the ``examples`` directory.
 
-Testing PyRP
-------------
+Testing Colubrid
+----------------
 
 There is an automated testing suite.
 ```shell
-$ pyrp-test
+$ colubrid
 ```
 This will run all tests located at the ``tests`` directory.
+
+Editing Colubrid code with a text editor
+----------------------------------------
+
+The Javascript syntax is the most simmilar highlighter to Colubrid.
+
+To set up this as default in vim, you need to add to your vimrc file the
+following line:
+```viml
+au BufNewFile,BufRead, *.clsc set filetype=javascript
+```
