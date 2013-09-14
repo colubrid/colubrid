@@ -18,10 +18,11 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
+# @CLENV@
+
 import argparse
 from colubrid.core import macros
 import colubrid
-import sys
 #from pyrp.core import args
 
 parser = argparse.ArgumentParser(description=macros.name, prefix_chars='+',

@@ -1,0 +1,14 @@
+{
+    "scripts": {
+        "python": ["colubrid"],
+        "debug": {
+            "python": ["colubridc"]
+        }
+    },
+    "libs": {
+        "python": ["colubrid"]
+    },
+    "tests": {
+        "colubrid": ["booleans", "code", "flow", "lists", "loop", "numbers"]
+    }
+}
