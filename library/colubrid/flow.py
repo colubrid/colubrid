@@ -15,7 +15,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from colubrid.types.code import Cache
 from colubrid.types.function import Function
 
 
@@ -41,17 +40,7 @@ class AskConditional(Function):
             return self.create_object(kwargs['else'])
 
 
-class IfCache(Cache, IfConditional):
-    def __init__(self):
-        Cache.__init__(self, IfConditional)
-
-
-class AskCache(Cache, AskConditional):
-    def __init__(self):
-        Cache.__init__(self, AskConditional)
-
-
-If = IfCache()
-Ask = AskCache()
+If = IfConditional()
+Ask = AskConditional()
 
 conditionals = [If, Ask]

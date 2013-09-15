@@ -15,7 +15,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from colubrid.types.code import Cache
 from colubrid.types.function import Function
 
 
@@ -29,9 +28,4 @@ class WhileLoop(Function):
             wtdo(self)
 
 
-class WhileCache(Cache, WhileLoop):
-    def __init__(self):
-        Cache.__init__(self, WhileLoop)
-
-
-While = WhileCache()
+While = WhileLoop()

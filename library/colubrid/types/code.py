@@ -27,14 +27,3 @@ class Code(ColubridObject):
 
     def __call__(self, parent, *args, **kwargs):
         map(self.create_object, self.instructions)
-
-
-class Cache:
-    def __init__(self, func):
-        self.instances = {}
-        self.func = func
-
-    def __call__(self, module, *args, **kwargs):
-        if not module in self.instances:
-            self.instances[module] = self.func(module)
-        return self.instances[module](module, *args, **kwargs)
