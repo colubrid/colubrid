@@ -34,7 +34,7 @@ def parse(parent, expression, line=False):
                     return ['get', [expression[0]], {}]
                 elif length > 1:
                     name = expression[0]
-                    line = name == ''
+                    line = name in ['', 'for']
                     if type(name) != str:
                         name = parse(parent, name)
                     args = map(lambda arg: parse(parent, arg, line=line),

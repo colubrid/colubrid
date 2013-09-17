@@ -18,14 +18,15 @@
 from colubrid import builtin
 from colubrid.flow import conditionals
 from colubrid.functions import functions
+from colubrid.loop import loops
 from colubrid.operators import operators
 from colubrid.types import types
 from colubrid.types.module import Module
-from colubrid.loop import While
 
-builtin_objects = [While]
+builtin_objects = []
 builtin_objects += conditionals
 builtin_objects += functions
+builtin_objects += loops
 builtin_objects += operators
 builtin_objects += types
 

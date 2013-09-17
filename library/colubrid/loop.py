@@ -29,3 +29,20 @@ class WhileLoop(Function):
 
 
 While = WhileLoop()
+
+
+class ForLoop(Function):
+    __colubridname__ = 'for'
+    build_args = False
+
+    def function(self, parent, *args, **kwargs):
+        wtdo = self.master.create_object(kwargs['do'])
+        self.master.create_object(args[0]) # Start
+        while self.master.create_object(args[1]): # Condition
+            wtdo(self)
+            self.master.create_object(args[2]) # Update
+
+
+For = ForLoop()
+
+loops = [For, While]
