@@ -18,5 +18,6 @@
 
 ['print', ('= Testing type dict =')],
 {'mydict': ['dict', (), {'hello': 'h', 'goodbye': 'g'}]},
-['print', (['mydict'])]
+['print', (['mydict'])],
+['print', ('hello:', ['mydict.hello'])]
 ]

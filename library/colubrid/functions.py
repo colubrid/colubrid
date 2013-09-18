@@ -49,11 +49,15 @@ class Get(Function):
 
     def function(self, parent, *args, **kwargs):
         name = str(args[0])
-        exists = parent.has_object(name)
+        parts = name.split('.')
+        exists = parent.has_object(parts[0])
         if exists:
-            return parent.get_object(name, exists)
+            obj = parent.get_object(parts[0], exists)
         else:
-            return builtin.objects[name]
+            obj = builtin.objects[name]
+        for i in parts[1:]:
+            obj = obj.get_attribute(i)
+        return obj
 
 rpget = Get()
 rpset = Set()

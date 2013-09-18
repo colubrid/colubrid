@@ -23,19 +23,21 @@ class Dict(ColubridObject):
 
     def __init__(self, module, *args, **kwargs):
         ColubridObject.__init__(self, module)
-        self.dictionary = self.create_kwargs(kwargs)
+        self.attributes = self.create_kwargs(kwargs)
 
     def __repr__(self):
         return '[\'dict\', (), %s]' % self.dictionary.__repr__()
 
     def __str__(self):
-        return str(self.dictionary)
+        string = '{%s}' % ','.join(['\'%s\': \'%s\'' % (i,
+                            self.attributes[i]) for i in self.attributes])
+        return string
 
     def __getitem__(self, item):
-        return self.dictionary(item)
+        return self.attributes(item)
 
     def __len__(self):
         try:
-            return len(self.dictionary)
+            return len(self.attributes)
         except:
             return 0

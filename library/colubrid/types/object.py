@@ -26,6 +26,7 @@ class ColubridObject:
     __colubridname__ = 'object'
     __converttype__ = None
     __relation__ = PART
+    attributes = {}
 
     def __init__(self, parent):
         self.logger_name = '%s:%s' % (parent.logger_name, self.__colubridname__)\
@@ -62,6 +63,9 @@ class ColubridObject:
             self.objects[name] = obj
         else:
             self.parent.set_object(name, obj)
+
+    def get_attribute(self, name):
+        return self.attributes[name]
 
     def create_object(self, expression):
         from colubrid.functions import rpget
