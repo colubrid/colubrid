@@ -15,14 +15,27 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA.
 
-from colubrid.types.boolean import Boolean
-from colubrid.types.code import Code
-from colubrid.types.dict import Dict
-from colubrid.types.list import List
-from colubrid.types.numbers import numbers
-from colubrid.types.string import String
+from colubrid.types.object import ColubridObject
 
-types = [Boolean, Code, Dict, List, String]
 
-for i in numbers:
-    types.append(numbers[i][1])
+class Dict(ColubridObject):
+    __colubridname__ = 'dict'
+
+    def __init__(self, module, *args, **kwargs):
+        ColubridObject.__init__(self, module)
+        self.dictionary = self.create_kwargs(kwargs)
+
+    def __repr__(self):
+        return '[\'dict\', (), %s]' % self.dictionary.__repr__()
+
+    def __str__(self):
+        return str(self.dictionary)
+
+    def __getitem__(self, item):
+        return self.dictionary(item)
+
+    def __len__(self):
+        try:
+            return len(self.dictionary)
+        except:
+            return 0

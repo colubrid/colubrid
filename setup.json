@@ -10,6 +10,7 @@
         "python": ["colubrid"]
     },
     "tests": {
-        "colubrid": ["booleans", "code", "flow", "lists", "loop", "numbers"]
+        "colubrid": ["booleans", "code", "dict", "flow", "lists", "loop",
+                     "numbers"]
     }
 }
