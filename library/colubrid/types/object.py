@@ -67,6 +67,13 @@ class ColubridObject:
     def get_attribute(self, name):
         return self.attributes[name]
 
+    def __call__(self, module, *args, **kwargs):
+        argv = map(self.create_object, args)
+        obj = self
+        for i in argv:
+            obj = obj.get_attribute(i.string)
+        return obj
+
     def create_object(self, expression):
         from colubrid.functions import rpget
         try:
